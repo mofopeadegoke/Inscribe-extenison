@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "نقش"
+    },
+    "extDescription": {
+        "message": "يساعد هذا الامتداد المستخدمين في تدوين الملاحظات."
+    },
+    "extTitle": {
+        "message": "يكتب العنوان"
+    },
+    "notetitle": {
+        "message": "عنوان ملاحظتك"
+    },
+    "notes": {
+        "message": "ملحوظات"
+    },
+    "createNoteBtn": {
+        "message": "إنشاء ملاحظة"
+    },
+    "deleteAllNotesBtn": {
+        "message": "حذف كافة الملاحظات"
+    },
+    "oops": {
+        "message": "اوووه! لا توجد ملاحظات حتى الآن"
+    },
+    "donate": {
+        "message": "يتبرع"
+    },
+    "deleteNoteBtn": {
+        "message": "حذف"
+    }
+}

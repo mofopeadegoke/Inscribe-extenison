@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "लिखना"
+    },
+    "extDescription": {
+        "message": "यह एक्सटेंशन उपयोगकर्ताओं को नोट्स बनाने में मददकरता है।"
+    },
+    "extTitle": {
+        "message": "शीर्षक लिखता है"
+    },
+    "notetitle": {
+        "message": "आपके नोट का शीर्षक"
+    },
+    "notes": {
+        "message": "टिप्पणियाँ"
+    },
+    "createNoteBtn": {
+        "message": "नोट बनाएँ"
+    },
+    "deleteAllNotesBtn": {
+        "message": "सभी नोट्स हटाएं"
+    },
+    "oops": {
+        "message": "उफ़! अभी तक कोई नोट नहीं"
+    },
+    "donate": {
+        "message": "दान देना"
+    },
+    "deleteNoteBtn": {
+        "message": "मिटाना"
+    }
+}

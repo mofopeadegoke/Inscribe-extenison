@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/note.css">
+
+</head>
+<body>
+    <div class="popup-box">
+        <div class="popup">
+            <div class="Updatecontent">
+                <header>
+                    <p>Update a note</p>
+                    <img src="./images/x-lg.svg" alt="Close Icon">
+                </header>
+                <form action="#">
+                    <div class="row title">
+                        <label>Title</label>
+                        <input type="text">
+                    </div>
+                    <div class="row description">
+                        <label>Description</label>
+                        <textarea></textarea>
+                    </div>
+                    <button>Update note</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="notePopup-box">
+        <div class="notePopup">
+            <div class="saveNote">
+                <header>
+                    <p>Save note locally</p>
+                    <img src="./images/x-lg.svg" alt="Close Icon" class="notePopup-boxCloseBtn">
+                </header>
+                <form action="#">
+                    <div class="row title">
+                        <label>Title</label>
+                        <input type="text" class="noteTitle">
+                    </div>
+                    <div class="row description">
+                        <label>Description</label>
+                        <textarea class="noteContent"></textarea>
+                    </div>
+                    <div class="flexRow">
+                        <input type="text" class="fileName" placeholder="File Name">
+                        <select id="fileExtensions">
+                            <option value="text/plain">Text File(.txt)</option>
+                            <option value="application/vnd.ms-powerpoint">PPT File(.ppt)</option>
+                            <option value="text.javascript">JS File(.js)</option>
+                            <option value="application/msword">Document File(.doc)</option>
+                            <option value="text/html">HTML File(.html)</option>
+                        </select>
+                    </div>
+                    <button class="saveNoteLocallyBtnAction">Save locally as <span class="fileType">Text</span> File</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <main>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li class="optionsBtn">Options
+                </li>
+                <label class="disable">Fill Color <input type="checkbox" id="fill-color">
+                </label>
+                <li><a href="/note.html">Notes</a></li>
+                <li><a href="/settings.html">Settings</a></li>
+            </ul>
+        </nav>
+    </article>
+        <article class="notes">
+        </article>
+     
+    </main>
+    <script src="./ExtPay.js"></script>
+    <script src="./note.js"></script>
+</body>
+</html>

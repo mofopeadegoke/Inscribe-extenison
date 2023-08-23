@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "version": "2.213",
+    "name": "Inscribe",
+    "description": "The Inscribe extension enables users to make notes",
+    "action": {
+        "default_title": "Inscribes Title",
+        "default_popup": "index.html"
+    },
+     "permissions": [
+        "storage",
+        "tabs",
+        "activeTab"
+    ],
+    "icons": {
+        "48": "insrcibeLogo48_48.png",
+        "128": "images/insrcibeLogo128_128.png"
+    },
+    "default_locale": "en",
+    "content_scripts": [
+        {
+            "matches": ["https://extensionpay.com/*"],
+            "js": ["ExtPay.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["ExtPay.js", "contentOwn.js"]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

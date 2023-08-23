@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscribe Speech to Text</title>
+    <style>
+        #textarea {
+            width: 90%;
+            height: 20rem;
+            resize: vertical;
+            padding: 5px 10px;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            font-size: larger;
+        }
+        button {
+            padding: 5px 10px;
+            background: rgb(245, 204, 0);
+            border: none;
+            border-radius: 2px;
+        }
+        *, *::after, *::before {
+            margin: 0;
+            line-height: 1.5;
+            box-sizing: border-box;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            padding: 0;
+        }
+        body {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        main {
+            max-width: 40rem;
+        }
+        @media all and (max-width: 480px) {
+            main {
+                width: 30rem;
+            }
+            
+        }
+        .copyText {
+            margin-left: 1rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        span {
+            font-weight: bolder;
+        }
+        .inscribeText {
+            background-image: linear-gradient(45deg, #dde752, rgb(245, 204, 0));
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-size: 400%;
+            color: transparent;
+            animation: bg-animation 10s infinite alternate;
+        }
+        @keyframes bg-animation {
+            0% {
+                background-position: left;
+            }
+            100% {
+                background-position: right;
+            }
+        }
+        .error-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 2;
+    }
+    .error-box .error {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 3;
+        transform: translate(-50%, -50%);
+        max-width: 400px;
+        width: 100%;
+        justify-content: center;
+    }
+    .error-box .errorContent {
+        width: calc(100% - 15px);
+        background-color: white;
+        border-radius: 5px;
+    }
+    .error-box .errorContent p  {
+        padding: 15px 25px;
+        font-weight: 500;
+        font-size: 20px;
+    }
+    .error-box .errorContent header {
+        padding: 6px 14px;
+        border-bottom: 1px solid #222;
+    }
+    .error, .errorContent header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .errorContent header img {
+        width: 23px;
+        cursor: pointer;
+    }
+    .error-box, .error-box .error {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .error-box.see,
+    .error-box.see .error {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .alertMessage {
+        padding: 5px 12px;
+        background-color: #222;
+        color: white;
+        display: inline-block;
+        border-radius: 15px;
+        position: absolute;
+        top: 94vh;
+        left: 30%;
+        opacity: 0;
+    }
+
+    @keyframes alertAnimation {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+            transform: translateY(-6rem);
+        }
+        80% {
+            opacity: 1;
+            transform: translateY(-6rem);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(0.2rem);
+        }
+    }
+    .show {
+        animation: alertAnimation 4s 1 ease-in-out forwards;
+    }
+    #textarea:valid ~ .copyText {
+            opacity: 1;
+            pointer-events: all;
+    }
+    .infoText {
+        margin-top: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <div class="error">
+            <div class="errorContent">
+                <header>
+                    <p>Ooops!</p>
+                    <img src="./images/x-lg.svg" alt="Close Icon">
+                </header>
+                <p class="errorMessage">An error occured! Check your internet connection</p>
+            </div>
+        </div>
+    </div>
+    <main>
+        <p>It is <span>NOT POSSIBLE</span> to use the speech recognition API <span>DIRECTLY</span> on a chrome extension's page. Hence we use the speech recognition API on this tab. Make your speech to text notes on this tab, copy the content from the text area using the button then save it as a note on <span class="inscribeText">INSCRIBE</span>. Please note that the speech to text feature will only work when you have internet access.</p>
+        <textarea id="textarea" required></textarea>
+        <br>
+        <button class="startSpeech">Speech Recognition</button>
+        <button class="copyText">Copy to Clipboard</button>
+        
+    </main>
+    <p class="alertMessage">Copied to Clipboard</p>
+
+
+    <script src="./speech.js"></script>
+</body>
+</html>

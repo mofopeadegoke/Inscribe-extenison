@@ -1,0 +1,315 @@
+let notesContainer = document.querySelector(".notes"),
+  closePopupBtn = document.querySelector(".Updatecontent header img"),
+  popupBox = document.querySelector(".popup-box"),
+  saveNoteLocallyPopupBox = document.querySelector(".notePopup-box"),
+  saveNoteLocallyTitle = document.querySelector(".notePopup-box .noteTitle"),
+  saveNoteLocallyNoteContentEl = document.querySelector(
+    ".notePopup-box .noteContent"
+  ),
+  deleteNoteBtns,
+  saveNoteLocallyFileName = document.querySelector(".notePopup-box .fileName"),
+  showContentBtns,
+  updateBtns,
+  titleInputEl = document.querySelector(".title input"),
+  descriptionInputEl = document.querySelector(".description textarea"),
+  isUpdate = false,
+  updateId,
+  updateNoteBtn = document.querySelector(".Updatecontent button"),
+  copyBtns,
+  alertBox,
+  copyId,
+  saveNoteLocallyBtns,
+  closeSaveNoteLocallyPopup = document.querySelector(
+    ".notePopup-box .notePopup-boxCloseBtn"
+  ),
+  saveNoteLocallyActionBtn = document.querySelector(
+    ".saveNoteLocallyBtnAction"
+  );
+var totalNotes = [],
+  selectedTheme;
+localStorage.getItem("theme")
+  ? (selectedTheme = localStorage.getItem("theme"))
+  : localStorage.setItem("theme", "yellowMode");
+function renderNotes() {
+  totalNotes = JSON.parse(localStorage.getItem("myNotes"));
+  let notes = "";
+  if (totalNotes) {
+    totalNotes.forEach((note, index) => {
+      notes += `
+      <article class="noteDiv">
+        <h3>${note.title}</h3>
+        <span>${note.text}</span>
+        <p class="copiedToClipboardAlert" data-id=${index}>Copied to clipboard</p>
+        <div class="settings">
+        <p>${note.date}</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" data-id=${index} class='showContentBtn'>
+        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+        </svg>
+        <ul class="content">
+        <li class='updateBtn' data-title='${note.title}' data-text='${note.text}' data-id=${index}>
+        <img src="./images/pencil.svg" alt="A pencil Logo">
+        Edit
+        </li>
+        <li class='copyBtn' data-text='${note.text}' data-id=${index}>
+        <img src="./images/clipboard.svg" alt="A pencil Logo">
+        Copy Content
+        </li>
+        <li class='deleteNoteBtn' data-id=${index}>
+        <img src="./images/trash3.svg" alt="A trash can logo">
+        Delete
+        </li>
+        <li class='saveNoteLocallyBtn' data-id=${index} data-title='${note.title}' data-text='${note.text}'>
+        <img src="./images/download.svg" alt="The download logo">
+        Save this note locally
+        </li>
+        </ul>
+        </div>
+      </article>`;
+    });
+  }
+  if (notesContainer) {
+    notesContainer.innerHTML = notes;
+  }
+  if (selectedTheme == "yellowMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "rgb(245, 204, 0)";
+        elem.style.color = "black";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "rgb(245, 204, 0)";
+        elem.style.color = "black";
+      });
+    }
+  } else if (selectedTheme == "blueMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "#3486eb";
+        elem.style.color = "white";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "#3486eb";
+        elem.style.color = "white";
+      });
+    }
+  } else if (selectedTheme == "purpleMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "purple";
+        elem.style.color = "white";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "purple";
+        elem.style.color = "white";
+      });
+    }
+  } else if (selectedTheme == "greenMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "green";
+        elem.style.color = "white";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "green";
+        elem.style.color = "white";
+      });
+    }
+  } else if (selectedTheme == "redMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "darkred";
+        elem.style.color = "white";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "darkred";
+        elem.style.color = "white";
+      });
+    }
+  } else if (selectedTheme == "pinkMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "pink";
+        elem.style.color = "black";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "pink";
+        elem.style.color = "black";
+      });
+    }
+  } else if (selectedTheme == "darkMode") {
+    if (document.querySelectorAll(".noteDiv")) {
+      document.querySelectorAll(".noteDiv").forEach((elem) => {
+        elem.style.background = "#333";
+        elem.style.color = "white";
+      });
+      document.querySelectorAll("button").forEach((elem) => {
+        elem.style.background = "#333";
+        elem.style.color = "white";
+      });
+    }
+  }
+}
+window.onload = () => {
+  renderNotes();
+
+  deleteNoteBtns = document.querySelectorAll(".deleteNoteBtn");
+  showContentBtns = document.querySelectorAll(".showContentBtn");
+  updateBtns = document.querySelectorAll(".updateBtn");
+  copyBtns = document.querySelectorAll(".copyBtn");
+  saveNoteLocallyBtns = document.querySelectorAll(".saveNoteLocallyBtn");
+  alertBox = document.querySelectorAll(".copiedToClipboardAlert");
+  deleteNoteBtns.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      let confirmDel = confirm("Are you sure you want to delete note?");
+      if (!confirmDel) return;
+      noteId = elem.getAttribute("data-id");
+      totalNotes.splice(noteId, 1);
+      localStorage.setItem("myNotes", JSON.stringify(totalNotes));
+      renderNotes();
+      window.location.reload();
+    });
+  });
+  showContentBtns.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      elem.classList.toggle("show");
+    });
+  });
+  updateBtns.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      id = elem.getAttribute("data-id");
+      title = elem.getAttribute("data-title");
+      desc = elem.getAttribute("data-text");
+      updateId = id;
+      popupBox.classList.add("see");
+      let textModified = desc;
+      textModified = textModified.replace(/\t/g, "  ");
+      textModified = textModified.replace(/<br>/g, "\n");
+      titleInputEl.value = title;
+      descriptionInputEl.value = textModified;
+      titleInputEl.focus();
+      console.log(id, title, textModified);
+    });
+  });
+  saveNoteLocallyBtns.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      title = elem.getAttribute("data-title");
+      desc = elem.getAttribute("data-text");
+      saveNoteLocallyPopupBox.classList.add("see");
+      saveNoteLocallyTitle.value = title;
+      saveNoteLocallyNoteContentEl.value = desc;
+      saveNoteLocallyFileName.value = title;
+      saveNoteLocallyFileName.focus();
+    });
+  });
+  copyBtns.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      copyId = elem.getAttribute("data-id");
+      text = elem.getAttribute("data-text");
+      const parser = new DOMParser();
+      const parserhtml = parser.parseFromString(text, "text/html");
+      const textContent = parserhtml.body.innerText;
+      navigator.clipboard.writeText(textContent);
+      // elem.parentElement.previousElementSibling.click();
+      alertBox.forEach((elem) => {
+        if (elem.getAttribute("data-id") == copyId) {
+          elem.classList.add("alertShow");
+        }
+      });
+      function hideNow() {
+        alertBox.forEach((elem) => {
+          if (elem.getAttribute("data-id") == copyId) {
+            elem.classList.remove("alertShow");
+          }
+        });
+      }
+      setTimeout(hideNow, 3100);
+    });
+  });
+  console.log(deleteNoteBtns);
+};
+// notesContainer.addEventListener("click", (e) => {
+//   if (e.target.matches(".deleteNoteBtn")) {
+//     ID = e.target.getAttribute("data-id");
+//     for (let i = 0; i < totalNotes.length; i++) {
+//       if (ID == totalNotes[i].id) totalNotes.splice(i, 1);
+//     }
+//   }
+//   // console.log(totalNotes);
+//   localStorage.setItem("myNotes", JSON.stringify(totalNotes));
+//   renderNotes();
+// });
+
+// function showMenu(elem) {
+//   elem.classList.toggle("show");
+// }
+// function deleteNote(noteId) {
+//   // console.log();
+//
+// }
+
+updateNoteBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let dateObj = new Date();
+  let month = months[dateObj.getMonth()],
+    day = dateObj.getDate(),
+    year = dateObj.getFullYear();
+  let textModified = descriptionInputEl.value;
+  textModified = textModified.replace(/  /g, "\t");
+  textModified = textModified.replace(/\n/g, "<br>\n");
+  let note = {
+    text: textModified,
+    title: titleInputEl.value,
+    date: `${month} ${day}, ${year}`,
+  };
+  totalNotes[updateId] = note;
+  localStorage.setItem("myNotes", JSON.stringify(totalNotes));
+  closePopupBtn.click();
+  renderNotes();
+  window.onload();
+});
+closePopupBtn.addEventListener("click", (e) => {
+  titleInputEl.value = "";
+  descriptionInputEl.value = "";
+  popupBox.classList.remove("see");
+});
+closeSaveNoteLocallyPopup.addEventListener("click", () => {
+  saveNoteLocallyTitle.value = "";
+  saveNoteLocallyNoteContentEl.value = "";
+  saveNoteLocallyFileName.value = "";
+  saveNoteLocallyPopupBox.classList.remove("see");
+});
+const noteContentElement = document.querySelector(".noteContent"),
+  fileExtensionBox = document.querySelector("#fileExtensions");
+
+fileExtensionBox.addEventListener("click", () => {
+  let selectedOption =
+    fileExtensionBox.options[fileExtensionBox.selectedIndex].text;
+  saveNoteLocallyActionBtn.innerText = `Save locally as ${
+    selectedOption.split(" ")[0]
+  } File`;
+  console.log(selectedOption.split(" ")[0]);
+});
+saveNoteLocallyActionBtn.addEventListener("click", () => {
+  const blob = new Blob([noteContentElement.value], {
+    type: fileExtensionBox.value,
+  });
+  const fileUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = saveNoteLocallyFileName.value;
+  link.href = fileUrl;
+  link.click();
+});

@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "Inscribir"
+    },
+    "extDescription": {
+        "message": "Esta extensión ayuda a los usuarios a tomar notas."
+    },
+    "extTitle": {
+        "message": "Inscribe Título"
+    },
+    "notetitle": {
+        "message": "Título de tu nota"
+    },
+    "notes": {
+        "message": "notas"
+    },
+    "createNoteBtn": {
+        "message": "Crear nota"
+    },
+    "deleteAllNotesBtn": {
+        "message": "Eliminar todas las notas"
+    },
+    "oops": {
+        "message": "¡Uy! No hay notas todavía"
+    },
+    "donate": {
+        "message": "Donar"
+    },
+    "deleteNoteBtn": {
+        "message": "Borrar"
+    }
+}

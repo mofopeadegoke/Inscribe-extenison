@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "Вписать"
+    },
+    "extDescription": {
+        "message": "Это расширение помогает пользователям делать заметки."
+    },
+    "extTitle": {
+        "message": "Вписывает название"
+    },
+    "notetitle": {
+        "message": "Название вашей заметки"
+    },
+    "notes": {
+        "message": "Заметки"
+    },
+    "createNoteBtn": {
+        "message": "Создать заметку"
+    },
+    "deleteAllNotesBtn": {
+        "message": "Удалить все заметки"
+    },
+    "oops": {
+        "message": "Упс! Заметок пока нет"
+    },
+    "donate": {
+        "message": "Пожертвовать"
+    },
+    "deleteNoteBtn": {
+        "message": "Удалить"
+    }
+}

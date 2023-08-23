@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "記す"
+    },
+    "extDescription": {
+        "message": "この拡張機能は、ユーザーがメモを作成するのに役立ちます。"
+    },
+    "extTitle": {
+        "message": "タイトルを刻む"
+    },
+    "notetitle": {
+        "message": "メモのタイトル"
+    },
+    "notes": {
+        "message": "ノート"
+    },
+    "createNoteBtn": {
+        "message": "メモを作成"
+    },
+    "deleteAllNotesBtn": {
+        "message": "すべてのメモを削除"
+    },
+    "oops": {
+        "message": "おっと！メモはまだありません"
+    },
+    "donate": {
+        "message": "寄付"
+    },
+    "deleteNoteBtn": {
+        "message": "消去"
+    }
+}

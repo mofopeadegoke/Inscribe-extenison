@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "Inscrever"
+    },
+    "extDescription": {
+        "message": "Esta extensão ajuda os usuários a fazer anotações."
+    },
+    "extTitle": {
+        "message": "Inscreve Título"
+    },
+    "notetitle": {
+        "message": "Título da sua nota"
+    },
+    "notes": {
+        "message": "Notas"
+    },
+    "createNoteBtn": {
+        "message": "Criar nota"
+    },
+    "deleteAllNotesBtn": {
+        "message": "Excluir todas as notas"
+    },
+    "oops": {
+        "message": "Ops! Ainda não há notas"
+    },
+    "donate": {
+        "message": "Doar"
+    },
+    "deleteNoteBtn": {
+        "message": "Excluir"
+    }
+}

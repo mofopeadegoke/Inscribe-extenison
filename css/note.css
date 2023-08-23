@@ -1,0 +1,318 @@
+*,
+*::after,
+*::before {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    min-width: 48rem;
+    line-height: 1.5;
+}
+main {
+   border: 1px solid black;
+   width: min(100%, 48rem);
+   overflow-x: hidden;
+   margin: auto;
+   padding: 0.5rem;
+   padding-bottom: 1rem;
+   position: relative;
+}
+article a {
+    cursor: pointer;
+    padding: 4px;
+    background-color: wheat;
+    color: black;
+    border: 1px solid black;
+    margin-inline: 4px;
+}
+.notes {
+    display: grid;
+    grid-template-columns: 22rem 22rem;
+    gap: 1rem;
+    height: fit-content;
+    min-height: 30rem;
+    justify-content: center;
+}
+.noteDiv {
+    border-radius: 2px;
+    background-color: rgb(245, 204, 0);
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+    max-width: 100%;
+    height: 15rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-all;
+    position: relative;
+}
+.noteDiv h3 {
+    font-weight: 500;
+    font-size: 20px;
+}
+.noteDiv .content li {
+    color: rgba(0, 0, 0, 0.8);
+}
+.noteDiv p {
+    font-size: 16px;
+}
+nav {
+    grid-column: 1 / span 2;
+    margin-block: 1rem;
+}
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+ul li a {
+    text-decoration: none;
+    color: black;
+}
+.disable {
+    opacity: 0.6;
+    pointer-events: none;
+}
+ul li a:where(:not(.disable))::after {
+    content: "";
+    width: 100%;
+    display: block;
+    background-color: black;
+    height: 1.2px;
+    transform: scaleX(0);
+    transform-origin: 0% 100%;
+    transition: all 0.4s ease-out;
+}
+
+ul li a:where(:not(.disable)):hover::after {
+    transform: scaleX(1);
+}
+button {
+    padding: 8px 13px;
+    background: #eee;
+    border: none;
+    border-radius: 2px;
+}
+svg {
+    display: inline-block;
+}
+.settings {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.noteDiv {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    background-color: floralwhite;
+    width: 9rem ;
+    padding: 0;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    border-radius: 5px;
+    transform-origin: bottom right;
+    transition: 0.2s transform ease-out;
+    transform: scale(0);
+}
+.content li {
+    max-width: 100%;
+    padding: 8px;
+    cursor: pointer;
+}
+.content li:hover {
+    background-color: #ddd;
+}
+.content:hover {
+    transform: scale(1);
+}
+.show ~ .content {
+    transform: scale(1);
+}
+.popup, .Updatecontent header, .notePopup, .saveNote header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.popup-box, .notePopup-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+.popup-box .popup, .notePopup-box .notePopup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+}
+.notePopup-box .notePopup {
+    z-index: 4;
+}
+.popup-box .Updatecontent, .notePopup-box .saveNote {
+    width: calc(100% - 15px);
+    background-color: white;
+    border-radius: 5px;
+}
+.popup-box .Updatecontent header{
+    padding: 15px 25px;
+    border-bottom: 1px solid #ccc;
+}
+.notePopup-box .saveNote header {
+    padding: 5px 15px;
+    border-bottom: 1px solid #ccc;
+}
+.Updatecontent header p{
+    font-weight: 500;
+    font-size: 20px;
+}
+.saveNote header p {
+    font-weight: 400;
+    font-size: 20px;
+}
+.Updatecontent header img, .saveNote header img {
+    width: 23px;
+    cursor: pointer;
+}
+.Updatecontent form , .saveNote form{
+    margin: 15px 25px 35px;
+}
+.Updatecontent form .row, .saveNote form .row{
+    margin-bottom: 15px;
+}
+form .row label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+.Updatecontent form :where(textarea, input), .saveNote form :where(textarea, input:not(.fileName)) {
+    width: 100%;
+    height: 35px;
+    font-size: 15px;
+    padding: 0 10px;
+    border-radius: 4px;
+    border: 1px solid #999;
+}
+.Updatecontent form textarea, .saveNote form textarea {
+    height: 150px;
+    resize: none;
+    padding: 8px 15px;
+}
+.Updatecontent form button, .saveNote form button {
+    width: 100%;
+    align-items: center;
+    height: 50px;
+    border: none;
+    background-color: rgb(245, 204, 0);
+    font-size: 17px;
+    cursor: pointer;
+    margin: auto;
+}
+.popup-box, .popup-box .popup, .notePopup-box, .notePopup-box .notePopup{
+    opacity: 0;
+    pointer-events: none;
+}
+/* .notePopup-box .notePopup {
+    opacity: 1;
+    pointer-events: all;
+} */
+.popup-box.see,
+.popup-box.see .popup, .notePopup-box.see, .notePopup-box.see .notePopup {
+    opacity: 1;
+    pointer-events: all;
+}
+.flexRow {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-template-rows: auto;
+    justify-content: space-between;
+}
+.flexRow * {
+    margin-bottom: 11px;
+    padding: 5px 2px;
+}
+.optionsBtn {
+    cursor: pointer;
+    position: relative;
+    opacity: 0.5;
+}
+
+.optionsBtn::after {
+    content: 'PREMIUM';
+    display: block;
+    background-color: #111;
+    color: rgb(245, 204, 0);
+    position: absolute;
+    padding: 1px 4px;
+    border: 0.5px solid black;
+    top: -9px;
+    left: 30px;
+    border-radius: 2px;
+    font-size: 7px;
+}
+.copiedToClipboardAlert {
+    background-color: #333;
+    border: 1px solid white;
+    padding: 5px 15px;
+    color: white;
+    font-size: 12px !important;
+    position: absolute;
+    top: 0;
+    border-radius: 15px;
+    right: 1.5rem;
+    transform: scale(0);
+    transform-origin: bottom center;
+}
+.copiedToClipboardAlert::after {
+    content: '';
+    display: block;
+    background-color: #333;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 42%;
+}
+.alertShow {
+    animation: animateAlert 3s 1 forwards;
+}
+@keyframes animateAlert {
+    0% {
+        transform: scale(0);
+        pointer-events: none;
+    }
+    10% {
+     transform: scale(1);   
+     pointer-events: all;
+    }
+    90% {
+        transform: scale(1);
+        pointer-events: all;
+    }
+    100% {
+        transform: scale(0);
+        pointer-events: none;
+    }
+    
+}

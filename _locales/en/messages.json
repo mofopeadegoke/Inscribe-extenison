@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "Inscribe"
+    },
+    "extDescription": {
+        "message": "This extension helps users make notes."
+    },
+    "extTitle": {
+        "message": "Inscribes Title"
+    },
+    "notetitle": {
+        "message": "Title of your note"
+    },
+    "notes": {
+        "message": "Notes"
+    },
+    "createNoteBtn": {
+        "message": "Create Note"
+    },
+    "deleteAllNotesBtn": {
+        "message": "Delete All Notes"
+    },
+    "oops": {
+        "message": "Ooops! No notes yet"
+    },
+    "donate": {
+        "message": "Donate"
+    },
+    "deleteNoteBtn": {
+        "message": "Delete"
+    }
+}

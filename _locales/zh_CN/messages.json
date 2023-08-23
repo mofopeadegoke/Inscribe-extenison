@@ -1,0 +1,32 @@
+{
+    "extName": {
+        "message": "題"
+    },
+    "extDescription": {
+        "message": "此擴展可幫助用戶做筆記。"
+    },
+    "extTitle": {
+        "message": "題寫標題"
+    },
+    "notetitle": {
+        "message": "你的筆記標題"
+    },
+    "notes": {
+        "message": "筆記"
+    },
+    "createNoteBtn": {
+        "message": "創建筆記"
+    },
+    "deleteAllNotesBtn": {
+        "message": "刪除所有筆記"
+    },
+    "oops": {
+        "message": "糟糕！還沒有筆記"
+    },
+    "donate": {
+        "message": "捐"
+    },
+    "deleteNoteBtn": {
+        "message": "刪除"
+    }
+}
