@@ -118,3 +118,54 @@ function throttle(func, limit) {
 }
 
 document.body.append(noteContainer);
+/* 
+<article class="container">
+  <article class="themes">
+    <div class="red"></div>
+    <div class="blue"></div>
+    <div class="yellow"></div>
+    <div class="green"></div>
+    <div class="red"></div>
+    <div class="blue"></div>
+    <div class="yellow"></div>
+  </article>
+  <p>
+   Delete
+  </p>
+</article>
+
+.container {
+  background: #ddd;
+  width: 180px;
+  height: 6rem;
+}
+.themes {
+  display: flex;
+  width: 180px;
+  height: 35px;
+  background: black;
+  flex-direction: row;
+  margin-bottom: 0px;
+}
+article div {
+  width: 30px;
+  height: 35px;
+}
+.red {
+  background: red;
+}
+.blue {
+  background: blue;
+}
+.yellow {
+  background: yellow;
+}
+.green {
+  background: green;
+}
+p {
+  background: cyan;
+  padding: 5px 10px;
+  margin-top: 0px;
+}
+*/
