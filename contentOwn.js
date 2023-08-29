@@ -7,6 +7,26 @@ let noteContainer = document.createElement("div");
 let noteRow = document.createElement("div");
 let moreIcon = document.createElement("span");
 let dateText = document.createElement("p");
+let moreContent = document.createElement("article");
+let themeContainer = document.createElement("article");
+let redTheme = document.createElement("div");
+let blueTheme = document.createElement("div");
+let yellowTheme = document.createElement("div");
+let greenTheme = document.createElement("div");
+let mintTheme = document.createElement("div");
+let blackTheme = document.createElement("div");
+let whiteTheme = document.createElement("div");
+let deleteText = document.createElement("p");
+moreContent.classList.add("container_");
+themeContainer.classList.add("theme_");
+redTheme.classList.add("red_");
+blueTheme.classList.add("blue_");
+yellowTheme.classList.add("yellow_");
+greenTheme.classList.add("green_");
+mintTheme.classList.add("mint_");
+blackTheme.classList.add("black_");
+whiteTheme.classList.add("white_");
+deleteText.textContent = "Delete";
 dateText.textContent = "17 - 08 - 2023";
 moreIcon.textContent = "...";
 let noteContent = document.createElement("div");
@@ -55,10 +75,20 @@ moreIcon.style.overflow = "hidden";
 dateText.style.margin = "0px";
 dateText.style.display = "inline-flex";
 dateText.style.fontSize = "10px";
+themeContainer.append(redTheme);
+themeContainer.append(blueTheme);
+themeContainer.append(yellowTheme);
+themeContainer.append(greenTheme);
+themeContainer.append(mintTheme);
+themeContainer.append(blackTheme);
+themeContainer.append(whiteTheme);
+moreContent.append(themeContainer);
+moreContent.append(deleteText);
 noteRow.append(moreIcon);
 noteRow.append(dateText);
 noteContainer.append(noteRow);
 noteContainer.append(noteContent);
+noteContainer.append(moreContent);
 let active = false;
 let currentX, currentY, initialX, initialY;
 noteRow.addEventListener("mousedown", dragStart);
@@ -118,54 +148,55 @@ function throttle(func, limit) {
 }
 
 document.body.append(noteContainer);
-/* 
-<article class="container">
-  <article class="themes">
-    <div class="red"></div>
-    <div class="blue"></div>
-    <div class="yellow"></div>
-    <div class="green"></div>
-    <div class="red"></div>
-    <div class="blue"></div>
-    <div class="yellow"></div>
-  </article>
-  <p>
-   Delete
-  </p>
-</article>
-
-.container {
-  background: #ddd;
-  width: 180px;
-  height: 6rem;
-}
-.themes {
-  display: flex;
-  width: 180px;
-  height: 35px;
-  background: black;
-  flex-direction: row;
-  margin-bottom: 0px;
-}
-article div {
-  width: 30px;
-  height: 35px;
-}
-.red {
-  background: red;
-}
-.blue {
-  background: blue;
-}
-.yellow {
-  background: yellow;
-}
-.green {
-  background: green;
-}
-p {
-  background: cyan;
-  padding: 5px 10px;
-  margin-top: 0px;
-}
-*/
+let containerEl = document.querySelector(".container_");
+let themeContainerEl = document.querySelector(".theme_");
+let themeEls = document.querySelectorAll(".container_ div");
+let containerPEl = document.querySelector(".container_ p");
+containerEl.style.background = "#ddd";
+containerEl.style.width = "180px";
+containerEl.style.height = "6rem";
+themeContainerEl.style.display = "flex";
+themeContainerEl.style.width = "180px";
+themeContainerEl.style.height = "35px";
+themeContainerEl.style.background = "black";
+themeContainerEl.style.flexDirection = "row";
+themeContainerEl.style.marginBottom = "0px";
+let themeArr = ["red", "blue", "yellow", "green", "mint", "black", "white"];
+themeEls.forEach((element) => {
+  element.style.width = "30px";
+  element.style.height = "35px";
+  for (i = 0; i < themeArr.length; i++) {
+    if (themeArr[i] == "red") {
+      element.style.background = "#c54245";
+      element.style.color = "#ECECEE";
+      return;
+    } else if (themeArr[i] == "blue") {
+      element.style.background = "#89ABE3FF";
+      element.style.color = "#FCF6F5FF";
+      return;
+    } else if (themeArr[i] == "yellow") {
+      element.style.background = "#F2AA4CFF";
+      element.style.color = "#101820FF";
+      return;
+    } else if (themeArr[i] == "green") {
+      element.style.background = "#2BAE66FF";
+      element.style.color = "#FCF6F5FF";
+      return;
+    } else if (themeArr[i] == "mint") {
+      element.style.background = "#222";
+      element.style.color = "#ADEFD1FF";
+      return;
+    } else if (themeArr[i] == "black") {
+      element.style.background = "#101820FF";
+      element.style.color = "#FEE715FF";
+      return;
+    } else if (themeArr[i] == "white") {
+      element.style.background = "#dddccc";
+      element.style.color = "black";
+      return;
+    }
+  }
+});
+containerPEl.style.background = "cyan";
+containerPEl.style.padding = "5px 10px";
+containerPEl.style.marginTop = "0px";
