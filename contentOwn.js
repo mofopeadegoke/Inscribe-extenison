@@ -148,13 +148,16 @@ function throttle(func, limit) {
 }
 
 document.body.append(noteContainer);
+
 let containerEl = document.querySelector(".container_");
 let themeContainerEl = document.querySelector(".theme_");
 let themeEls = document.querySelectorAll(".container_ div");
 let containerPEl = document.querySelector(".container_ p");
-containerEl.style.background = "#ddd";
 containerEl.style.width = "180px";
 containerEl.style.height = "6rem";
+containerEl.style.position = "absolute";
+containerEl.style.top = "0px";
+containerEl.style.left = "0px";
 themeContainerEl.style.display = "flex";
 themeContainerEl.style.width = "180px";
 themeContainerEl.style.height = "35px";
@@ -165,36 +168,51 @@ let themeArr = ["red", "blue", "yellow", "green", "mint", "black", "white"];
 themeEls.forEach((element) => {
   element.style.width = "30px";
   element.style.height = "35px";
-  for (i = 0; i < themeArr.length; i++) {
-    if (themeArr[i] == "red") {
-      element.style.background = "#c54245";
-      element.style.color = "#ECECEE";
-      return;
-    } else if (themeArr[i] == "blue") {
-      element.style.background = "#89ABE3FF";
-      element.style.color = "#FCF6F5FF";
-      return;
-    } else if (themeArr[i] == "yellow") {
-      element.style.background = "#F2AA4CFF";
-      element.style.color = "#101820FF";
-      return;
-    } else if (themeArr[i] == "green") {
-      element.style.background = "#2BAE66FF";
-      element.style.color = "#FCF6F5FF";
-      return;
-    } else if (themeArr[i] == "mint") {
-      element.style.background = "#222";
-      element.style.color = "#ADEFD1FF";
-      return;
-    } else if (themeArr[i] == "black") {
-      element.style.background = "#101820FF";
-      element.style.color = "#FEE715FF";
-      return;
-    } else if (themeArr[i] == "white") {
-      element.style.background = "#dddccc";
-      element.style.color = "black";
-      return;
-    }
+  // for (i = 0; i < themeArr.length; i++) {
+  //   if (themeArr[i] == "red") {
+  //     element.style.background = "#c54245";
+  //     element.style.color = "#ECECEE";
+  //     return;
+  //   } else if (themeArr[i] == "blue") {
+  //     element.style.background = "#89ABE3FF";
+  //     element.style.color = "#FCF6F5FF";
+  //     return;
+  //   } else if (themeArr[i] == "yellow") {
+  //     element.style.background = "#F2AA4CFF";
+  //     element.style.color = "#101820FF";
+  //     return;
+  //   } else if (themeArr[i] == "green") {
+  //     element.style.background = "#2BAE66FF";
+  //     element.style.color = "#FCF6F5FF";
+  //     return;
+  //   } else if (themeArr[i] == "mint") {
+  //     element.style.background = "#222";
+  //     element.style.color = "#ADEFD1FF";
+  //     return;
+  //   } else if (themeArr[i] == "black") {
+  //     element.style.background = "#101820FF";
+  //     element.style.color = "#FEE715FF";
+  //     return;
+  //   } else if (themeArr[i] == "white") {
+  //     element.style.background = "#dddccc";
+  //     element.style.color = "black";
+  //     return;
+  //   }
+  // }
+  if (element.className == "red_") {
+    element.style.background = "#c54245";
+  } else if (element.className == "blue_") {
+    element.style.background = "#89ABE3FF";
+  } else if (element.className == "yellow_") {
+    element.style.background = "#F2AA4CFF";
+  } else if (element.className == "green_") {
+    element.style.background = "#2BAE66FF";
+  } else if (element.className == "mint_") {
+    element.style.background = "#ADEFD1FF";
+  } else if (element.className == "black_") {
+    element.style.background = "#101820FF";
+  } else if (element.className == "white_") {
+    element.style.background = "#dddccc";
   }
 });
 containerPEl.style.background = "cyan";
