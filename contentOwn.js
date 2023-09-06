@@ -158,7 +158,7 @@ let moreIconEl = document.querySelector(".noteMoreIcon_");
 containerEl.style.minWidth = "180px";
 containerEl.style.width = "100%";
 containerEl.style.height = "65px";
-containerEl.style.background = "green";
+containerEl.style.background = "white";
 containerEl.style.position = "absolute";
 containerEl.style.top = "0px";
 containerEl.style.left = "0px";
@@ -217,20 +217,61 @@ themeEls.forEach((element) => {
   // }
   if (element.className == "red_") {
     element.style.background = "#c54245";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#c54245";
+      noteContent.style.color = "#ECECEE";
+      noteRow.style.backgroundColor = "#B12E31";
+      noteRow.style.color = "#ECECEE";
+    });
   } else if (element.className == "blue_") {
     element.style.background = "#89ABE3FF";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#89ABE3FF";
+      noteContent.style.color = "#FCF6F5FF";
+      noteRow.style.backgroundColor = "#6C8DB7FF";
+      noteRow.style.color = "#FCF6F5FF";
+    });
   } else if (element.className == "yellow_") {
     element.style.background = "#F2AA4CFF";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#F2AA4CFF";
+      noteContent.style.color = "#101820FF";
+      noteRow.style.backgroundColor = "#D1883AFF";
+      noteRow.style.color = "#101820FF";
+    });
   } else if (element.className == "green_") {
     element.style.background = "#2BAE66FF";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#2BAE66FF";
+      noteContent.style.color = "#FCF6F5FF";
+      noteRow.style.backgroundColor = "#1D8E4DFF";
+      noteRow.style.color = "#FCF6F5FF";
+    });
   } else if (element.className == "mint_") {
     element.style.background = "#ADEFD1FF";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#222";
+      noteContent.style.color = "#ADEFD1FF";
+      noteRow.style.backgroundColor = "#111";
+      noteRow.style.color = "#ADEFD1FF";
+    });
   } else if (element.className == "black_") {
     element.style.background = "#101820FF";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#101820FF";
+      noteContent.style.color = "#FEE715FF";
+      noteRow.style.backgroundColor = "#080C14FF";
+      noteRow.style.color = "#FEE715FF";
+    });
   } else if (element.className == "white_") {
     element.style.background = "#dddccc";
+    element.addEventListener("click", () => {
+      noteContent.style.backgroundColor = "#f5f5f5";
+      noteContent.style.color = "black";
+      noteRow.style.backgroundColor = "#ccc";
+      noteRow.style.color = "black";
+    });
   }
 });
-containerPEl.style.background = "cyan";
 containerPEl.style.padding = "5px 10px";
 containerPEl.style.marginTop = "0px";
