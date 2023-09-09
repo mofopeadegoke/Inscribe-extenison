@@ -28,7 +28,10 @@ mintTheme.classList.add("mint_");
 blackTheme.classList.add("black_");
 whiteTheme.classList.add("white_");
 deleteText.textContent = "Delete";
-dateText.textContent = "17 - 08 - 2023";
+let d = new Date();
+dateText.textContent = `${d.getDate()} - ${
+  d.getMonth() + 1
+} - ${d.getFullYear()}`;
 moreIcon.textContent = "...";
 let noteContent = document.createElement("div");
 noteContainer.style.color = "black";
@@ -57,6 +60,7 @@ noteRow.style.alignItems = "center";
 noteRow.style.paddingInline = "5px";
 noteContent.contentEditable = true;
 noteContent.style.minWidth = "180px";
+noteContent.style.width = "180px";
 noteContent.style.minHeight = "100px";
 noteContent.style.padding = "5px";
 noteContent.style.height = "176px";
@@ -275,3 +279,23 @@ themeEls.forEach((element) => {
 });
 containerPEl.style.padding = "5px 10px";
 containerPEl.style.marginTop = "0px";
+
+// Auto saving
+let previousValue = noteContent.textContent;
+
+noteContent.addEventListener("input", () => {
+  if (previousValue !== noteContent.textContent) {
+    previousValue = noteContent.textContent;
+    const event = new Event("change");
+    noteContent.dispatchEvent(event);
+  }
+});
+
+noteContent.addEventListener("change", (e) => {
+  var liveSavingNote;
+  liveSavingNote = noteContent.textContent;
+  localStorage.setItem("liveNote", liveSavingNote);
+});
+let value = localStorage.getItem("liveNote");
+console.log(value);
+noteContent.textContent = value;
