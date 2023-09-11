@@ -151,7 +151,7 @@ function throttle(func, limit) {
     }
   };
 }
-
+localStorage.setItem("theme", "whiteMode");
 document.body.append(noteContainer);
 
 let containerEl = document.querySelector(".container_");
@@ -226,6 +226,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#ECECEE";
       noteRow.style.backgroundColor = "#B12E31";
       noteRow.style.color = "#ECECEE";
+      localStorage.setItem("theme", "christmasMode");
     });
   } else if (element.className == "blue_") {
     element.style.background = "#89ABE3FF";
@@ -234,6 +235,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#FCF6F5FF";
       noteRow.style.backgroundColor = "#6C8DB7FF";
       noteRow.style.color = "#FCF6F5FF";
+      localStorage.setItem("theme", "winterMode");
     });
   } else if (element.className == "yellow_") {
     element.style.background = "#F2AA4CFF";
@@ -242,6 +244,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#101820FF";
       noteRow.style.backgroundColor = "#D1883AFF";
       noteRow.style.color = "#101820FF";
+      localStorage.setItem("theme", "yellowMode");
     });
   } else if (element.className == "green_") {
     element.style.background = "#2BAE66FF";
@@ -250,6 +253,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#FCF6F5FF";
       noteRow.style.backgroundColor = "#1D8E4DFF";
       noteRow.style.color = "#FCF6F5FF";
+      localStorage.setItem("theme", "islandWhiteMode");
     });
   } else if (element.className == "mint_") {
     element.style.background = "#ADEFD1FF";
@@ -258,6 +262,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#ADEFD1FF";
       noteRow.style.backgroundColor = "#111";
       noteRow.style.color = "#ADEFD1FF";
+      localStorage.setItem("theme", "mintMode");
     });
   } else if (element.className == "black_") {
     element.style.background = "#101820FF";
@@ -266,6 +271,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "#FEE715FF";
       noteRow.style.backgroundColor = "#080C14FF";
       noteRow.style.color = "#FEE715FF";
+      localStorage.setItem("theme", "blazingBlackMode");
     });
   } else if (element.className == "white_") {
     element.style.background = "#dddccc";
@@ -274,6 +280,7 @@ themeEls.forEach((element) => {
       noteContent.style.color = "black";
       noteRow.style.backgroundColor = "#ccc";
       noteRow.style.color = "black";
+      localStorage.setItem("theme", "whiteMode");
     });
   }
 });
