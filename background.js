@@ -11,3 +11,9 @@ extpay.startBackground(); // this line is required to use ExtPay in the rest of 
 extpay.getUser().then((user) => {
   // console.log(user);
 });
+
+chrome.contextMenu.create({
+  id: "1",
+  title: "Add an Inscribe Note here",
+  contexts: ["all"],
+});

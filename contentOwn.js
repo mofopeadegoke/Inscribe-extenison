@@ -4,6 +4,7 @@ document.querySelectorAll("p").forEach((el) => {
   console.log("Hello");
 });
 let noteContainer = document.createElement("div");
+noteContainer.classList.add("parentContainer");
 let noteRow = document.createElement("div");
 let moreIcon = document.createElement("span");
 moreIcon.classList.add("noteMoreIcon_");
@@ -28,6 +29,7 @@ mintTheme.classList.add("mint_");
 blackTheme.classList.add("black_");
 whiteTheme.classList.add("white_");
 deleteText.textContent = "Delete";
+deleteText.classList.add("delTxt");
 let d = new Date();
 dateText.textContent = `${d.getDate()} - ${
   d.getMonth() + 1
@@ -38,15 +40,17 @@ noteContainer.style.color = "black";
 noteContainer.style.position = "absolute";
 noteContainer.style.top = "10px";
 noteContainer.style.left = "10px";
-noteContainer.style.transition = "all 0.1s ease-out";
+noteContainer.style.transition = "all 0.0001s ease-out";
 noteContainer.style.zIndex = 999999999999999;
 noteContainer.style.fontSize = "14px";
 noteContainer.style.width = "fit-content";
 noteContainer.style.height = "fit-content";
 noteContainer.style.display = "flex";
 noteContainer.style.flexDirection = "column";
-noteContainer.style.transition = "0.1s ease-out";
 noteContainer.style.boxShadow = "0.4px 0.4px 10px 0.01px black";
+noteContainer.style.transform = "scale(1)";
+noteContainer.style.transformOrigin = "top left";
+noteContainer.style.transition = "transform 1s ease-out";
 noteRow.style.minWidth = "180px";
 noteRow.style.minHeight = "25px";
 noteRow.style.maxWidth = "100%";
@@ -151,7 +155,7 @@ function throttle(func, limit) {
     }
   };
 }
-localStorage.setItem("theme", "whiteMode");
+
 document.body.append(noteContainer);
 
 let containerEl = document.querySelector(".container_");
@@ -268,10 +272,10 @@ themeEls.forEach((element) => {
     element.style.background = "#101820FF";
     element.addEventListener("click", () => {
       noteContent.style.backgroundColor = "#101820FF";
-      noteContent.style.color = "#FEE715FF";
+      noteContent.style.color = "#ddd";
       noteRow.style.backgroundColor = "#080C14FF";
-      noteRow.style.color = "#FEE715FF";
-      localStorage.setItem("theme", "blazingBlackMode");
+      noteRow.style.color = "#ddd";
+      localStorage.setItem("theme", "blackMode");
     });
   } else if (element.className == "white_") {
     element.style.background = "#dddccc";
@@ -306,3 +310,53 @@ noteContent.addEventListener("change", (e) => {
 let value = localStorage.getItem("liveNote");
 console.log(value);
 noteContent.textContent = value;
+let themeValue = localStorage.getItem("theme");
+if (themeValue === "christmasMode") {
+  noteContent.style.backgroundColor = "#c54245";
+  noteContent.style.color = "#ECECEE";
+  noteRow.style.backgroundColor = "#B12E31";
+  noteRow.style.color = "#ECECEE";
+} else if (themeValue === "winterMode") {
+  noteContent.style.backgroundColor = "#89ABE3FF";
+  noteContent.style.color = "#FCF6F5FF";
+  noteRow.style.backgroundColor = "#6C8DB7FF";
+  noteRow.style.color = "#FCF6F5FF";
+} else if (themeValue === "yellowMode") {
+  noteContent.style.backgroundColor = "#F2AA4CFF";
+  noteContent.style.color = "#101820FF";
+  noteRow.style.backgroundColor = "#D1883AFF";
+  noteRow.style.color = "#101820FF";
+} else if (themeValue === "islandWhiteMode") {
+  noteContent.style.backgroundColor = "#2BAE66FF";
+  noteContent.style.color = "#FCF6F5FF";
+  noteRow.style.backgroundColor = "#1D8E4DFF";
+  noteRow.style.color = "#FCF6F5FF";
+} else if (themeValue === "mintMode") {
+  noteContent.style.backgroundColor = "#222";
+  noteContent.style.color = "#ADEFD1FF";
+  noteRow.style.backgroundColor = "#111";
+  noteRow.style.color = "#ADEFD1FF";
+} else if (themeValue === "blackMode") {
+  noteContent.style.backgroundColor = "#101820FF";
+  noteContent.style.color = "#ddd";
+  noteRow.style.backgroundColor = "#080C14FF";
+  noteRow.style.color = "#ddd";
+} else if (themeValue === "whiteMode") {
+  noteContent.style.backgroundColor = "#f5f5f5";
+  noteContent.style.color = "#000";
+  noteRow.style.backgroundColor = "#ccc";
+  noteRow.style.color = "#000";
+}
+
+let delTxtEl = document.querySelector(".delTxt");
+delTxtEl.style.cursor = "pointer";
+delTxtEl.addEventListener("click", () => {
+  noteContent.style.backgroundColor = "#f5f5f5";
+  noteContent.style.color = "#000";
+  noteRow.style.backgroundColor = "#ccc";
+  noteRow.style.color = "#000";
+  localStorage.setItem("liveNote", "");
+  localStorage.setItem("theme", "whiteMode");
+  noteContainer.style.transform = "scale(0)";
+  noteContainer.remove();
+});
