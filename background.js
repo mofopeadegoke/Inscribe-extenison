@@ -12,8 +12,19 @@ extpay.getUser().then((user) => {
   // console.log(user);
 });
 
-chrome.contextMenu.create({
-  id: "1",
-  title: "Add an Inscribe Note here",
+chrome.contextMenus.create({
+  id: "id",
+  title: "Add an Inscribe Sticky Note here",
   contexts: ["all"],
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "id") {
+    chrome.runtime.sendMessage(
+      { msg: "Make a sticky note" },
+      function (response) {
+        // console.log(response.msg);
+      }
+    );
+  }
 });

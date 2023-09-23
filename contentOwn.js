@@ -48,7 +48,7 @@ noteContainer.style.height = "fit-content";
 noteContainer.style.display = "flex";
 noteContainer.style.flexDirection = "column";
 noteContainer.style.boxShadow = "0.4px 0.4px 10px 0.01px black";
-noteContainer.style.transform = "scale(1)";
+noteContainer.style.transform = "scale(0)";
 noteContainer.style.transformOrigin = "top left";
 noteContainer.style.transition = "transform 1s ease-out";
 noteRow.style.minWidth = "180px";
@@ -359,4 +359,11 @@ delTxtEl.addEventListener("click", () => {
   localStorage.setItem("theme", "whiteMode");
   noteContainer.style.transform = "scale(0)";
   noteContainer.remove();
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.msg === "Make a sticky note") {
+    noteContainer.style.transform = "scale(1)";
+    sendResponse({ msg: "Done" });
+  }
 });
