@@ -20,11 +20,8 @@ chrome.contextMenus.create({
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "id") {
-    chrome.runtime.sendMessage(
-      { msg: "Make a sticky note" },
-      function (response) {
-        // console.log(response.msg);
-      }
-    );
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { action: "runContentScript" });
+    });
   }
 });

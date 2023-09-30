@@ -358,12 +358,21 @@ delTxtEl.addEventListener("click", () => {
   localStorage.setItem("liveNote", "");
   localStorage.setItem("theme", "whiteMode");
   noteContainer.style.transform = "scale(0)";
+  localStorage.setItem("isStickyNote", "false");
   noteContainer.remove();
 });
-
+if (localStorage.getItem("isStickyNote") == "true") {
+  noteContainer.style.transform = "scale(1)";
+} else if (localStorage.getItem("isStickyNote") == "false") {
+  noteContainer.style.transform = "scale(0)";
+} else {
+  noteContainer.style.transform = "scale(0)";
+}
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.msg === "Make a sticky note") {
+  if (request.action === "runContentScript") {
+    document.body.append(noteContainer);
     noteContainer.style.transform = "scale(1)";
+    localStorage.setItem("isStickyNote", "true");
     sendResponse({ msg: "Done" });
   }
 });
