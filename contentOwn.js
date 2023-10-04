@@ -1,8 +1,4 @@
 console.log("Exists");
-document.querySelectorAll("p").forEach((el) => {
-  el.style.color = "blue";
-  console.log("Hello");
-});
 let noteContainer = document.createElement("div");
 noteContainer.classList.add("parentContainer");
 let noteRow = document.createElement("div");
@@ -302,14 +298,24 @@ noteContent.addEventListener("input", () => {
   }
 });
 
+var value, arrLocalStr;
+var liveSavingNote = null;
 noteContent.addEventListener("change", (e) => {
-  var liveSavingNote;
-  liveSavingNote = noteContent.textContent;
-  localStorage.setItem("liveNote", liveSavingNote);
+  liveSavingNote = noteContent.innerText;
+  const lines = liveSavingNote.split("\n");
+  let storedTextArray = [];
+  storedTextArray = [...storedTextArray, ...lines];
+  var arrayStr = JSON.stringify(storedTextArray);
+  console.log(arrayStr);
+  localStorage.setItem("liveNote", arrayStr);
 });
-let value = localStorage.getItem("liveNote");
-console.log(value);
-noteContent.textContent = value;
+
+value = localStorage.getItem("liveNote");
+if (value) {
+  arrLocalStr = JSON.parse(value);
+  noteContent.innerHTML = arrLocalStr.join("<br>");
+  console.log(arrLocalStr);
+}
 let themeValue = localStorage.getItem("theme");
 if (themeValue === "christmasMode") {
   noteContent.style.backgroundColor = "#c54245";
