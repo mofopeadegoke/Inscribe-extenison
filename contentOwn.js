@@ -299,7 +299,7 @@ noteContent.addEventListener("input", () => {
 });
 
 var value, arrLocalStr;
-var liveSavingNote = null;
+var liveSavingNote = "";
 noteContent.addEventListener("change", (e) => {
   liveSavingNote = noteContent.innerText;
   const lines = liveSavingNote.split("\n");
@@ -378,6 +378,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "runContentScript") {
     document.body.append(noteContainer);
     noteContainer.style.transform = "scale(1)";
+    noteContent.textContent = null;
     localStorage.setItem("isStickyNote", "true");
     sendResponse({ msg: "Done" });
   }
