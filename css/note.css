@@ -131,6 +131,10 @@ svg {
     max-width: 100%;
     padding: 8px;
     cursor: pointer;
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: 5px;
+    align-items: center;
 }
 .content li:hover {
     background-color: #ddd;

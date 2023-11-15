@@ -1,4 +1,4 @@
-console.log("Exists");
+const extpay = ExtPay("inscribe");
 let noteContainer = document.createElement("div");
 noteContainer.classList.add("parentContainer");
 let noteRow = document.createElement("div");
@@ -14,7 +14,8 @@ let greenTheme = document.createElement("div");
 let mintTheme = document.createElement("div");
 let blackTheme = document.createElement("div");
 let whiteTheme = document.createElement("div");
-let deleteText = document.createElement("p");
+let deleteText = document.createElement("button");
+let saveNoteLocallyBtn = document.createElement("button");
 moreContent.classList.add("container_");
 themeContainer.classList.add("theme_");
 redTheme.classList.add("red_");
@@ -25,7 +26,9 @@ mintTheme.classList.add("mint_");
 blackTheme.classList.add("black_");
 whiteTheme.classList.add("white_");
 deleteText.textContent = "Delete";
+saveNoteLocallyBtn.append("Save note locally");
 deleteText.classList.add("delTxt");
+saveNoteLocallyBtn.classList.add("saveNoteLocallyEl");
 let d = new Date();
 dateText.textContent = `${d.getDate()} - ${
   d.getMonth() + 1
@@ -80,20 +83,18 @@ moreIcon.style.overflow = "hidden";
 dateText.style.margin = "0px";
 dateText.style.display = "inline-flex";
 dateText.style.fontSize = "10px";
-themeContainer.append(redTheme);
-themeContainer.append(blueTheme);
-themeContainer.append(yellowTheme);
-themeContainer.append(greenTheme);
-themeContainer.append(mintTheme);
-themeContainer.append(blackTheme);
-themeContainer.append(whiteTheme);
-moreContent.append(themeContainer);
-moreContent.append(deleteText);
-noteRow.append(moreIcon);
-noteRow.append(dateText);
-noteContainer.append(noteRow);
-noteContainer.append(noteContent);
-noteContainer.append(moreContent);
+themeContainer.append(
+  redTheme,
+  blueTheme,
+  yellowTheme,
+  greenTheme,
+  mintTheme,
+  blackTheme,
+  whiteTheme
+);
+moreContent.append(themeContainer, deleteText, saveNoteLocallyBtn);
+noteRow.append(moreIcon, dateText);
+noteContainer.append(noteRow, noteContent, moreContent);
 let active = false;
 let currentX, currentY, initialX, initialY;
 noteRow.addEventListener("mousedown", dragStart);
@@ -157,11 +158,14 @@ document.body.append(noteContainer);
 let containerEl = document.querySelector(".container_");
 let themeContainerEl = document.querySelector(".theme_");
 let themeEls = document.querySelectorAll(".container_ div");
-let containerPEl = document.querySelector(".container_ p");
+let containerButtonEl = document.querySelector(".container_ button");
+let saveNoteLocallyBtnEl = document.querySelector(
+  ".container_ .saveNoteLocallyEl"
+);
 let moreIconEl = document.querySelector(".noteMoreIcon_");
 containerEl.style.minWidth = "180px";
 containerEl.style.width = "100%";
-containerEl.style.height = "65px";
+containerEl.style.height = "97px";
 containerEl.style.background = "white";
 containerEl.style.position = "absolute";
 containerEl.style.top = "0px";
@@ -188,37 +192,6 @@ let themeArr = ["red", "blue", "yellow", "green", "mint", "black", "white"];
 themeEls.forEach((element) => {
   element.style.width = "calc(100% / 7)";
   element.style.height = "35px";
-  // for (i = 0; i < themeArr.length; i++) {
-  //   if (themeArr[i] == "red") {
-  //     element.style.background = "#c54245";
-  //     element.style.color = "#ECECEE";
-  //     return;
-  //   } else if (themeArr[i] == "blue") {
-  //     element.style.background = "#89ABE3FF";
-  //     element.style.color = "#FCF6F5FF";
-  //     return;
-  //   } else if (themeArr[i] == "yellow") {
-  //     element.style.background = "#F2AA4CFF";
-  //     element.style.color = "#101820FF";
-  //     return;
-  //   } else if (themeArr[i] == "green") {
-  //     element.style.background = "#2BAE66FF";
-  //     element.style.color = "#FCF6F5FF";
-  //     return;
-  //   } else if (themeArr[i] == "mint") {
-  //     element.style.background = "#222";
-  //     element.style.color = "#ADEFD1FF";
-  //     return;
-  //   } else if (themeArr[i] == "black") {
-  //     element.style.background = "#101820FF";
-  //     element.style.color = "#FEE715FF";
-  //     return;
-  //   } else if (themeArr[i] == "white") {
-  //     element.style.background = "#dddccc";
-  //     element.style.color = "black";
-  //     return;
-  //   }
-  // }
   if (element.className == "red_") {
     element.style.background = "#c54245";
     element.addEventListener("click", () => {
@@ -284,8 +257,52 @@ themeEls.forEach((element) => {
     });
   }
 });
-containerPEl.style.padding = "5px 10px";
-containerPEl.style.marginTop = "0px";
+
+// Styling Delete button on the sticky note
+containerButtonEl.style.padding = "5px 10px";
+containerButtonEl.style.marginTop = "0px";
+containerButtonEl.style.display = "block";
+containerButtonEl.style.border = "none";
+containerButtonEl.style.width = "100%";
+containerButtonEl.style.textAlign = "left";
+
+// Styling Save note locally button on the sticky note
+saveNoteLocallyBtnEl.style.padding = "5px 10px";
+saveNoteLocallyBtnEl.style.marginTop = "0px";
+saveNoteLocallyBtnEl.style.display = "flex";
+saveNoteLocallyBtnEl.style.border = "none";
+saveNoteLocallyBtnEl.style.width = "100%";
+saveNoteLocallyBtnEl.style.textAlign = "left";
+saveNoteLocallyBtnEl.style.cursor = "pointer";
+saveNoteLocallyBtnEl.style.flexFlow = "row wrap";
+saveNoteLocallyBtnEl.style.columnGap = "5px";
+saveNoteLocallyBtnEl.style.alignItems = "center";
+saveNoteLocallyBtnEl.style.borderTop = "1px solid #aaa";
+saveNoteLocallyBtnEl.style.borderBottom = "1px solid #aaa";
+
+// Saving notes locally
+saveNoteLocallyBtnEl.addEventListener("click", () => {
+  extpay
+    .getUser()
+    .then((user) => {
+      if (user.paid) {
+        const blob = new Blob([noteContent.textContent], {
+          type: "text/plain",
+        });
+        const fileUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = "inscribe_note";
+        link.href = fileUrl;
+        link.click();
+      } else {
+        extpay.openPaymentPage();
+      }
+    })
+    .catch((err) => {
+      // document.querySelector("p").innerHTML =
+      //   "Error fetching data :( Check that your ExtensionPay id is correct and you're connected to the internet";
+    });
+});
 
 // Auto saving
 let previousValue = noteContent.textContent;
@@ -314,7 +331,6 @@ value = localStorage.getItem("liveNote");
 if (value) {
   arrLocalStr = JSON.parse(value);
   noteContent.innerHTML = arrLocalStr.join("<br>");
-  console.log(arrLocalStr);
 }
 let themeValue = localStorage.getItem("theme");
 if (themeValue === "christmasMode") {
@@ -357,6 +373,8 @@ if (themeValue === "christmasMode") {
 let delTxtEl = document.querySelector(".delTxt");
 delTxtEl.style.cursor = "pointer";
 delTxtEl.addEventListener("click", () => {
+  let confirmDel = confirm("Are you sure you want to delete note?");
+  if (!confirmDel) return;
   noteContent.style.backgroundColor = "#f5f5f5";
   noteContent.style.color = "#000";
   noteRow.style.backgroundColor = "#ccc";
