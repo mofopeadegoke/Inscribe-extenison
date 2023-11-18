@@ -22,7 +22,7 @@ let selectedTool,
   brushWidth = 5,
   selectedTheme,
   micImgElement = document.querySelector(".micImgReal");
-console.log(micImgElement);
+// console.log(micImgElement);
 localStorage.getItem("theme")
   ? (selectedTheme = localStorage.getItem("theme"))
   : localStorage.setItem("theme", "yellowMode");
@@ -151,7 +151,7 @@ function startDrawing(event) {
   ctx.fillStyle = selectedColor;
   ctx.beginPath();
   snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  console.log(event);
+  // console.log(event);
 }
 
 canvas.addEventListener("mousemove", (event) => {
@@ -183,7 +183,7 @@ toolsBtn.forEach((btn) => {
     document.querySelector(".active").classList.remove("active");
     btn.classList.add("active");
     selectedTool = btn.id;
-    console.log(selectedTool);
+    // console.log(selectedTool);
   });
 });
 
@@ -250,7 +250,7 @@ function startTouchDrawing(event) {
     isDrawing = true;
     mouse.x = touch.pageX - rectLeft;
     mouse.y = touch.pageY - rectTop;
-    console.log(touch);
+    // console.log(touch);
     ctx.lineWidth = brushWidth;
     ctx.strokeStyle = selectedColor;
     ctx.fillStyle = selectedColor;
@@ -263,7 +263,7 @@ canvas.addEventListener("touchmove", (event) => {
   [...event.changedTouches].forEach((touch) => {
     if (!isDrawing) return;
     ctx.putImageData(snapshot, 0, 0);
-    console.log(rectLeft);
+    // console.log(rectLeft);
     if (selectedTool === "brush" || selectedTool === "eraser") {
       ctx.strokeStyle = selectedTool === "eraser" ? "#FFF" : selectedColor;
       ctx.lineWidth = brushWidth;
@@ -339,17 +339,6 @@ fileExtensionsInputBox.addEventListener("change", () => {
     fileExtensionsInputBox.options[fileExtensionsInputBox.selectedIndex].text;
   saveAsFileBtn.innerText = `Save As ${selectedOption.split(" ")[0]} File`;
   console.log(selectedOption.split(" ")[0]);
-});
-
-saveAsFileBtn.addEventListener("click", () => {
-  const blob = new Blob([textAreaText.textContent], {
-    type: fileExtensionsInputBox.value,
-  });
-  const fileUrl = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.download = fileNameInputBox.value;
-  link.href = fileUrl;
-  link.click();
 });
 
 // Saving Notes in Local Storage
@@ -469,6 +458,16 @@ extpay
   .getUser()
   .then((user) => {
     if (user.paid) {
+      saveAsFileBtn.addEventListener("click", () => {
+        const blob = new Blob([textAreaText.textContent], {
+          type: fileExtensionsInputBox.value,
+        });
+        const fileUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = fileNameInputBox.value;
+        link.href = fileUrl;
+        link.click();
+      });
       saveImage.addEventListener("click", () => {
         const link = document.createElement("a");
         link.download = `${Date.now()}.png`;
@@ -496,6 +495,9 @@ extpay
         popupBox.classList.add("see");
       });
       optionsBtn.addEventListener("click", () => {
+        popupBox.classList.add("see");
+      });
+      saveAsFileBtn.addEventListener("click", () => {
         popupBox.classList.add("see");
       });
     }

@@ -1,6 +1,6 @@
+const extpay = ExtPay("inscribe");
 let notesContainer = document.querySelector(".notes"),
   closePopupBtn = document.querySelector(".Updatecontent header img"),
-  popupBox = document.querySelector(".popup-box"),
   saveNoteLocallyPopupBox = document.querySelector(".notePopup-box"),
   saveNoteLocallyTitle = document.querySelector(".notePopup-box .noteTitle"),
   saveNoteLocallyNoteContentEl = document.querySelector(
@@ -25,6 +25,9 @@ let notesContainer = document.querySelector(".notes"),
   saveNoteLocallyActionBtn = document.querySelector(
     ".saveNoteLocallyBtnAction"
   );
+const popupBox = document.querySelector(".popup-box"),
+  errorBox = document.querySelector(".error-box"),
+  closeErrorPopupBtn = document.querySelector(".errorContent header img");
 var totalNotes = [],
   selectedTheme;
 localStorage.getItem("theme")
@@ -190,15 +193,27 @@ window.onload = () => {
       console.log(id, title, textModified);
     });
   });
+  closePopupBtn.addEventListener("click", () => {
+    popupBox.classList.remove("see");
+  });
   saveNoteLocallyBtns.forEach((elem) => {
     elem.addEventListener("click", () => {
-      title = elem.getAttribute("data-title");
-      desc = elem.getAttribute("data-text");
-      saveNoteLocallyPopupBox.classList.add("see");
-      saveNoteLocallyTitle.value = title;
-      saveNoteLocallyNoteContentEl.value = desc;
-      saveNoteLocallyFileName.value = title;
-      saveNoteLocallyFileName.focus();
+      extpay
+        .getUser()
+        .then((user) => {
+          if (user.paid) {
+            title = elem.getAttribute("data-title");
+            desc = elem.getAttribute("data-text");
+            saveNoteLocallyPopupBox.classList.add("see");
+            saveNoteLocallyTitle.value = title;
+            saveNoteLocallyNoteContentEl.value = desc;
+            saveNoteLocallyFileName.value = title;
+            saveNoteLocallyFileName.focus();
+          } else {
+            popupBox.classList.add("see");
+          }
+        })
+        .catch((err) => {});
     });
   });
   copyBtns.forEach((elem) => {
