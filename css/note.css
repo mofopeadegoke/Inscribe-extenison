@@ -145,7 +145,28 @@ svg {
 .show ~ .content {
     transform: scale(1);
 }
-.popup, .Updatecontent header, .notePopup, .saveNote header {
+.popup .Upgradecontent {
+    background-color: #fff;
+    padding-bottom: 1rem;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+.popup .Upgradecontent > p {
+    padding: 1rem;
+    padding-top: 0rem;
+    font-size: 1.3rem;
+}
+.popup .Upgradecontent>button {
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+}
+.pay {
+    padding-block: 0.8rem;
+    cursor: pointer;
+}
+
+.popup, .Updatecontent header, .Upgradecontent header, .notePopup, .saveNote header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -177,15 +198,18 @@ svg {
     background-color: white;
     border-radius: 5px;
 }
-.popup-box .Updatecontent header{
+.popup-box .Updatecontent header, .popup-box .Upgradecontent header{
     padding: 15px 25px;
     border-bottom: 1px solid #ccc;
+}
+.popup-box .Upgradecontent header {
+    margin-bottom: 0.5rem;
 }
 .notePopup-box .saveNote header {
     padding: 5px 15px;
     border-bottom: 1px solid #ccc;
 }
-.Updatecontent header p{
+.Updatecontent header p, .Upgradecontent header p{
     font-weight: 500;
     font-size: 20px;
 }
@@ -193,7 +217,7 @@ svg {
     font-weight: 400;
     font-size: 20px;
 }
-.Updatecontent header img, .saveNote header img {
+.Updatecontent header img, .saveNote header img, .Upgradecontent header img{
     width: 23px;
     cursor: pointer;
 }

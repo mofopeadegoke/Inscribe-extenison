@@ -26,8 +26,10 @@ let notesContainer = document.querySelector(".notes"),
     ".saveNoteLocallyBtnAction"
   );
 const popupBox = document.querySelector(".popup-box"),
+  popupBoxUpgrade = document.querySelector(".popup-box.upgrade"),
   errorBox = document.querySelector(".error-box"),
-  closeErrorPopupBtn = document.querySelector(".errorContent header img");
+  closeErrorPopupBtn = document.querySelector(".errorContent header img"),
+  payBtn = document.querySelector(".pay");
 var totalNotes = [],
   selectedTheme;
 localStorage.getItem("theme")
@@ -210,7 +212,7 @@ window.onload = () => {
             saveNoteLocallyFileName.value = title;
             saveNoteLocallyFileName.focus();
           } else {
-            popupBox.classList.add("see");
+            popupBoxUpgrade.classList.add("see");
           }
         })
         .catch((err) => {});
@@ -327,4 +329,11 @@ saveNoteLocallyActionBtn.addEventListener("click", () => {
   link.download = saveNoteLocallyFileName.value;
   link.href = fileUrl;
   link.click();
+});
+payBtn.addEventListener("click", () => {
+  if (navigator.onLine) {
+    extpay.openPaymentPage();
+  } else {
+    errorBox.classList.add("see");
+  }
 });
