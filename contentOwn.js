@@ -16,6 +16,8 @@ let blackTheme = document.createElement("div");
 let whiteTheme = document.createElement("div");
 let deleteText = document.createElement("button");
 let saveNoteLocallyBtn = document.createElement("button");
+let microphoneFAB = document.createElement("div");
+microphoneFAB.classList.add("microphone");
 moreContent.classList.add("container_");
 themeContainer.classList.add("theme_");
 redTheme.classList.add("red_");
@@ -34,6 +36,8 @@ dateText.textContent = `${d.getDate()} - ${
   d.getMonth() + 1
 } - ${d.getFullYear()}`;
 moreIcon.textContent = "...";
+microphoneFAB.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M192 0C139 0 96 43 96 96V256c0 53 43 96 96 96s96-43 96-96V96c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24v40c0 89.1 66.2 162.7 152 174.4V464H120c-13.3 0-24 10.7-24 24s10.7 24 24 24h72 72c13.3 0 24-10.7 24-24s-10.7-24-24-24H216V430.4c85.8-11.7 152-85.3 152-174.4V216c0-13.3-10.7-24-24-24s-24 10.7-24 24v40c0 70.7-57.3 128-128 128s-128-57.3-128-128V216z"/></svg>`;
 let noteContent = document.createElement("div");
 noteContainer.style.color = "black";
 noteContainer.style.position = "absolute";
@@ -79,6 +83,13 @@ moreIcon.style.padding = "0px";
 moreIcon.style.marginTop = "-10px";
 moreIcon.style.textAlign = "center";
 moreIcon.style.overflow = "hidden";
+microphoneFAB.style.display = "inline-block";
+microphoneFAB.style.position = "fixed";
+microphoneFAB.style.width = "5rem";
+microphoneFAB.style.borderRadius = "50%";
+microphoneFAB.style.right = "10px";
+microphoneFAB.style.bottom = "10px";
+
 // moreIcon.style.verticalAlign = "middle";
 dateText.style.margin = "0px";
 dateText.style.display = "inline-flex";
@@ -94,6 +105,7 @@ themeContainer.append(
 );
 moreContent.append(themeContainer, deleteText, saveNoteLocallyBtn);
 noteRow.append(moreIcon, dateText);
+noteContent.append(microphoneFAB);
 noteContainer.append(noteRow, noteContent, moreContent);
 let active = false;
 let currentX, currentY, initialX, initialY;
@@ -330,7 +342,7 @@ noteContent.addEventListener("change", (e) => {
 value = localStorage.getItem("liveNote");
 if (value) {
   arrLocalStr = JSON.parse(value);
-  noteContent.innerHTML = arrLocalStr.join("<br>");
+  noteContent.innerHTML += arrLocalStr.join("<br>");
 }
 let themeValue = localStorage.getItem("theme");
 if (themeValue === "christmasMode") {
@@ -401,3 +413,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendResponse({ msg: "Done" });
   }
 });
+
+// Microphone Image Styling
+let FABImg = document.querySelector(".microphone svg");
+FABImg.style.maxWidth = "100%";

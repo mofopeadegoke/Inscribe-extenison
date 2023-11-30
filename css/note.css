@@ -148,7 +148,6 @@ svg {
 .popup .Upgradecontent {
     background-color: #fff;
     padding-bottom: 1rem;
-    border: 1px solid blue;
     border-radius: 5px;
 }
 .popup .Upgradecontent > p {
@@ -180,6 +179,7 @@ svg {
     background: rgba(0, 0, 0, 0.4);
     z-index: 2;
 }
+
 .popup-box .popup, .notePopup-box .notePopup {
     position: absolute;
     top: 50%;

@@ -25,8 +25,9 @@ let notesContainer = document.querySelector(".notes"),
   saveNoteLocallyActionBtn = document.querySelector(
     ".saveNoteLocallyBtnAction"
   );
+let closeUpgradePopupBtn = document.querySelector(".Upgradecontent header img");
 const popupBox = document.querySelector(".popup-box"),
-  popupBoxUpgrade = document.querySelector(".popup-box.upgrade"),
+  popupBoxUpgrade = document.querySelector(".upgrade"),
   errorBox = document.querySelector(".error-box"),
   closeErrorPopupBtn = document.querySelector(".errorContent header img"),
   payBtn = document.querySelector(".pay");
@@ -192,7 +193,7 @@ window.onload = () => {
       titleInputEl.value = title;
       descriptionInputEl.value = textModified;
       titleInputEl.focus();
-      console.log(id, title, textModified);
+      // console.log(id, title, textModified);
     });
   });
   closePopupBtn.addEventListener("click", () => {
@@ -215,8 +216,15 @@ window.onload = () => {
             popupBoxUpgrade.classList.add("see");
           }
         })
-        .catch((err) => {});
+        .catch((err) => {
+          errorBox.classList.add("see");
+        });
     });
+  });
+  closeUpgradePopupBtn.addEventListener("click", () => {
+    // console.log("Hello");
+    // console.log(popupBoxUpgrade);
+    popupBoxUpgrade.classList.remove("see");
   });
   copyBtns.forEach((elem) => {
     elem.addEventListener("click", () => {
@@ -242,7 +250,7 @@ window.onload = () => {
       setTimeout(hideNow, 3100);
     });
   });
-  console.log(deleteNoteBtns);
+  // console.log(deleteNoteBtns);
 };
 // notesContainer.addEventListener("click", (e) => {
 //   if (e.target.matches(".deleteNoteBtn")) {
@@ -318,7 +326,7 @@ fileExtensionBox.addEventListener("click", () => {
   saveNoteLocallyActionBtn.innerText = `Save locally as ${
     selectedOption.split(" ")[0]
   } File`;
-  console.log(selectedOption.split(" ")[0]);
+  // console.log(selectedOption.split(" ")[0]);
 });
 saveNoteLocallyActionBtn.addEventListener("click", () => {
   const blob = new Blob([noteContentElement.value], {
