@@ -432,6 +432,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 // FAB Code
 let microphoneEl = document.querySelector(".microphone__");
+
 microphoneEl.addEventListener("click", () => {
   var speech = true;
   window.SpeechRecognition = window.webkitSpeechRecognition;
@@ -441,11 +442,13 @@ microphoneEl.addEventListener("click", () => {
     const transcript = Array.from(e.results)
       .map((result) => result[0])
       .map((result) => result.transcript);
-    noteContent.textContent += transcript;
+    let speechValue = transcript;
+    noteContent.textContent += speechValue;
   });
   if (speech == true) {
     recognition.start();
   }
-  console.log("start");
+  noteContent.append(microphoneFAB);
 });
+
 // End of FAB Code
