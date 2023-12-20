@@ -15,7 +15,11 @@ let mintTheme = document.createElement("div");
 let blackTheme = document.createElement("div");
 let whiteTheme = document.createElement("div");
 let deleteText = document.createElement("button");
-let saveNoteLocallyBtn = document.createElement("button");
+let saveNoteLocallyBtn = document.createElement("button"),
+  acctIcon = document.createElement("article"); // Creating the account icon elemnt on the sticky note
+acctIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#000000" d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>`; // Putting an svg in the elemnet
+acctIcon.classList.add("acctContainer");
+acctIcon.style.cursor = "pointer"; // Styling it a bit
 // FAB Code
 let microphoneFAB = document.createElement("button");
 microphoneFAB.classList.add("microphone__");
@@ -120,7 +124,7 @@ themeContainer.append(
   whiteTheme
 );
 moreContent.append(themeContainer, deleteText, saveNoteLocallyBtn);
-noteRow.append(moreIcon, dateText);
+noteRow.append(moreIcon, dateText, acctIcon);
 noteContent.append(microphoneFAB);
 noteContainer.append(noteRow, noteContent, moreContent);
 let active = false;
@@ -308,6 +312,50 @@ saveNoteLocallyBtnEl.style.alignItems = "center";
 saveNoteLocallyBtnEl.style.borderTop = "1px solid #aaa";
 saveNoteLocallyBtnEl.style.borderBottom = "1px solid #aaa";
 
+// Function to check if the user has exceeded the limit
+function hasExceededLimit() {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  const storageKey = `userActions_${currentMonth}`;
+
+  // Retrieve the count from local storage
+  const userActionCount = parseInt(localStorage.getItem(storageKey)) || 0;
+
+  // Check if the user has exceeded the limit
+  return userActionCount >= 10;
+}
+
+// Function to perform the user action
+function saveLocally() {
+  if (hasExceededLimit()) {
+    alert("You have exceeded number of notes for free users this month.");
+    extpay.openPaymentPage();
+    return;
+  }
+
+  // Perform the user action
+  const blob = new Blob([noteContent.textContent], {
+    type: "text/plain",
+  });
+  const fileUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = "inscribe_note";
+  link.href = fileUrl;
+  link.click();
+  // Update the count in local storage
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  const storageKey = `userActions_${currentMonth}`;
+
+  // Retrieve the current count or default to 0
+  const userActionCount = parseInt(localStorage.getItem(storageKey)) || 0;
+
+  // Increment the count
+  localStorage.setItem(storageKey, userActionCount + 1);
+
+  console.log("User action performed successfully.");
+}
+
 // Saving notes locally
 saveNoteLocallyBtnEl.addEventListener("click", () => {
   extpay
@@ -323,7 +371,7 @@ saveNoteLocallyBtnEl.addEventListener("click", () => {
         link.href = fileUrl;
         link.click();
       } else {
-        extpay.openPaymentPage();
+        saveLocally();
       }
     })
     .catch((err) => {
