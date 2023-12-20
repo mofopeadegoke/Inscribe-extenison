@@ -328,7 +328,6 @@ function hasExceededLimit() {
 // Function to perform the user action
 function saveLocally() {
   if (hasExceededLimit()) {
-    alert("You have exceeded number of notes for free users this month.");
     extpay.openPaymentPage();
     return;
   }
