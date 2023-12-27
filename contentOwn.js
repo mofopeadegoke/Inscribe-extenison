@@ -54,7 +54,7 @@ microphoneFAB.style.aspectRatio = 1;
 microphoneFAB.style.cursor = "pointer";
 microphoneFAB.style.position = "absolute";
 microphoneFAB.style.bottom = "10px";
-microphoneFAB.style.right = "20px";
+microphoneFAB.style.right = "10px";
 microphoneFAB.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
 microphoneFAB.style.transition = "background-color 0.3s ease";
 if (navigator.onLine) {
@@ -64,6 +64,7 @@ if (navigator.onLine) {
   microphoneFAB.style.opacity = 0.5;
 }
 // End of FAB Code
+
 let noteContent = document.createElement("div");
 noteContainer.style.color = "black";
 noteContainer.style.position = "absolute";
@@ -381,26 +382,39 @@ saveNoteLocallyBtnEl.addEventListener("click", () => {
 
 // Auto saving
 let previousValue = noteContent.textContent;
-
-noteContent.addEventListener("input", () => {
-  if (previousValue !== noteContent.textContent) {
-    previousValue = noteContent.textContent;
-    const event = new Event("change");
-    noteContent.dispatchEvent(event);
-  }
+var liveSavingNote = "";
+const customEevent = new Event("contentChange");
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    console.log("Change detected: ", mutation);
+    liveSavingNote = noteContent.textContent;
+    const lines = liveSavingNote.split("\n");
+    let storedTextArray = [];
+    storedTextArray = [...storedTextArray, ...lines];
+    var arrayStr = JSON.stringify(storedTextArray);
+    console.log(arrayStr);
+    localStorage.setItem("liveNote", arrayStr);
+  });
 });
+const config = { attributes: true, childList: true, subtree: true };
+observer.observe(noteContent, config);
+// noteContent.addEventListener("change", () => {
+//   if (previousValue !== noteContent.textContent) {
+//     previousValue = noteContent.textContent;
+//     noteContent.dispatchEvent(customEevent);
+//   }
+// });
 
 var value, arrLocalStr;
-var liveSavingNote = "";
-noteContent.addEventListener("change", (e) => {
-  liveSavingNote = noteContent.innerText;
-  const lines = liveSavingNote.split("\n");
-  let storedTextArray = [];
-  storedTextArray = [...storedTextArray, ...lines];
-  var arrayStr = JSON.stringify(storedTextArray);
-  console.log(arrayStr);
-  localStorage.setItem("liveNote", arrayStr);
-});
+// noteContent.addEventListener("contentChange", (e) => {
+//   liveSavingNote = noteContent.innerText;
+//   const lines = liveSavingNote.split("\n");
+//   let storedTextArray = [];
+//   storedTextArray = [...storedTextArray, ...lines];
+//   var arrayStr = JSON.stringify(storedTextArray);
+//   console.log(arrayStr);
+//   localStorage.setItem("liveNote", arrayStr);
+// });
 
 value = localStorage.getItem("liveNote");
 if (value) {
@@ -471,12 +485,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "runContentScript") {
     document.body.append(noteContainer);
     noteContainer.style.transform = "scale(1)";
-    noteContent.textContent = null;
+    noteContent.textContent = "";
     localStorage.setItem("isStickyNote", "true");
     sendResponse({ msg: "Done" });
   }
 });
-
 // FAB Code
 let microphoneEl = document.querySelector(".microphone__");
 
@@ -489,13 +502,14 @@ microphoneEl.addEventListener("click", () => {
     const transcript = Array.from(e.results)
       .map((result) => result[0])
       .map((result) => result.transcript);
-    let speechValue = transcript;
+    let speechValue = transcript + " ";
     noteContent.textContent += speechValue;
+    // noteContent.dispatchEvent(customEevent);
+    noteContent.append(microphoneFAB);
   });
   if (speech == true) {
     recognition.start();
   }
-  noteContent.append(microphoneFAB);
+  speech = false;
 });
-
 // End of FAB Code
