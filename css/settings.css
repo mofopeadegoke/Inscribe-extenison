@@ -9,7 +9,7 @@
 }
 body {
     min-width: 50rem;
-}
+}   
 main {
     display: grid;
     grid-template-rows: 3rem 25rem 3rem;
@@ -79,7 +79,7 @@ nav ul a:hover::after {
 .content {
     padding: 15px 25px;
     width: 30rem;
-    margin: 5rem 9.5rem;
+    margin: 3rem 9.5rem;
 }
 .themeOptions {
     list-style: none;
@@ -164,4 +164,24 @@ nav ul a:hover::after {
 }
 .infoText span {
     font-weight: bold;
+}
+.follow img {
+    width: 1.25rem;
+}
+.follow {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+    margin-top: 2rem;
+    align-items: center;
+}
+.follow .social {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 3px;
+}
+.follow a.social {
+    color: #000;
+    
 }

@@ -63,13 +63,14 @@ if (navigator.onLine) {
   microphoneFAB.style.pointerEvents = "none";
   microphoneFAB.style.opacity = 0.5;
 }
+microphoneFAB.style.display = "none";
 // End of FAB Code
 
 let noteContent = document.createElement("div");
 noteContainer.style.color = "black";
 noteContainer.style.position = "absolute";
+noteContainer.style.right = "10px";
 noteContainer.style.top = "10px";
-noteContainer.style.left = "10px";
 noteContainer.style.transition = "all 0.0001s ease-out";
 noteContainer.style.zIndex = 999999999999999;
 noteContainer.style.fontSize = "14px";
@@ -381,23 +382,22 @@ saveNoteLocallyBtnEl.addEventListener("click", () => {
 });
 
 // Auto saving
-let previousValue = noteContent.textContent;
-var liveSavingNote = "";
-const customEevent = new Event("contentChange");
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    console.log("Change detected: ", mutation);
-    liveSavingNote = noteContent.textContent;
-    const lines = liveSavingNote.split("\n");
-    let storedTextArray = [];
-    storedTextArray = [...storedTextArray, ...lines];
-    var arrayStr = JSON.stringify(storedTextArray);
-    console.log(arrayStr);
-    localStorage.setItem("liveNote", arrayStr);
-  });
-});
-const config = { attributes: true, childList: true, subtree: true };
-observer.observe(noteContent, config);
+// var liveSavingNote = "";
+// const customEevent = new Event("contentChange");
+// const observer = new MutationObserver((mutations) => {
+//   mutations.forEach((mutation) => {
+//     // console.log("Change detected: ", mutation);
+//     liveSavingNote = noteContent.textContent;
+//     const lines = liveSavingNote;
+//     let storedTextArray = [];
+//     storedTextArray = [...storedTextArray, ...lines];
+//     var arrayStr = JSON.stringify(storedTextArray);
+//     // console.log(arrayStr);
+//     localStorage.setItem("liveNote", arrayStr);
+//   });
+// });
+// const config = { attributes: true, childList: true, subtree: true };
+// observer.observe(noteContent, config);
 // noteContent.addEventListener("change", () => {
 //   if (previousValue !== noteContent.textContent) {
 //     previousValue = noteContent.textContent;
@@ -405,8 +405,8 @@ observer.observe(noteContent, config);
 //   }
 // });
 
-var value, arrLocalStr;
-// noteContent.addEventListener("contentChange", (e) => {
+// var value, arrLocalStr;
+// noteContent.addEventListener("change", (e) => {
 //   liveSavingNote = noteContent.innerText;
 //   const lines = liveSavingNote.split("\n");
 //   let storedTextArray = [];
@@ -415,7 +415,27 @@ var value, arrLocalStr;
 //   console.log(arrayStr);
 //   localStorage.setItem("liveNote", arrayStr);
 // });
+let previousValue = noteContent.textContent;
 
+noteContent.addEventListener("input", () => {
+  if (previousValue !== noteContent.textContent) {
+    previousValue = noteContent.textContent;
+    const event = new Event("change");
+    noteContent.dispatchEvent(event);
+  }
+});
+
+var value, arrLocalStr;
+var liveSavingNote = "";
+noteContent.addEventListener("change", (e) => {
+  liveSavingNote = noteContent.innerText;
+  const lines = liveSavingNote.split("\n");
+  let storedTextArray = [];
+  storedTextArray = [...storedTextArray, ...lines];
+  var arrayStr = JSON.stringify(storedTextArray);
+  console.log(arrayStr);
+  localStorage.setItem("liveNote", arrayStr);
+});
 value = localStorage.getItem("liveNote");
 if (value) {
   arrLocalStr = JSON.parse(value);

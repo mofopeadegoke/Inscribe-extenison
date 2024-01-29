@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "version": "2.22",
+    "version": "2.216",
     "name": "Inscribe",
     "description": "The Inscribe extension enables users to make notes",
     "action": {
@@ -17,8 +17,8 @@
         "contextMenus"
     ],
     "icons": {
-        "48": "insrcibeLogo48_48.png",
-        "128": "images/insrcibeLogo128_128.png"
+        "48": "images/InscribeNew48.png",
+        "128": "images/insribeNew128.png"
     },
     "default_locale": "en",
     "content_scripts": [
