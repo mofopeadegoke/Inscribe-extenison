@@ -95,6 +95,7 @@ button {
     background: #eee;
     border: none;
     border-radius: 2px;
+    cursor: pointer;
 }
 svg {
     display: inline-block;
@@ -153,18 +154,15 @@ svg {
 .popup .Upgradecontent > p {
     padding: 1rem;
     padding-top: 0rem;
-    font-size: 1.3rem;
+    font-size: 0.9rem;
 }
 .popup .Upgradecontent>button {
     width: 90%;
     margin-left: 5%;
     text-align: center;
-}
-.pay {
+    margin-block: 7px;
     padding-block: 0.8rem;
-    cursor: pointer;
 }
-
 .popup, .Updatecontent header, .Upgradecontent header, .notePopup, .saveNote header {
     display: flex;
     align-items: center;

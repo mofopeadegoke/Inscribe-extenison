@@ -31,6 +31,7 @@ const popupBox = document.querySelector(".popup-box"),
   errorBox = document.querySelector(".error-box"),
   closeErrorPopupBtn = document.querySelector(".errorContent header img"),
   payBtn = document.querySelector(".pay");
+const trialBtn = document.querySelector(".trial");
 var totalNotes = [],
   selectedTheme;
 localStorage.getItem("theme")
@@ -204,7 +205,12 @@ window.onload = () => {
       extpay
         .getUser()
         .then((user) => {
-          if (user.paid) {
+          const now = new Date();
+          const sevenDays = 1000 * 60 * 60 * 24 * 7; // seven days in milliseconds
+          if (
+            user.paid ||
+            (user.trialStartedAt && now - user.trialStartedAt < sevenDays)
+          ) {
             title = elem.getAttribute("data-title");
             desc = elem.getAttribute("data-text");
             saveNoteLocallyPopupBox.classList.add("see");

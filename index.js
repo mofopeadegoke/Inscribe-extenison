@@ -23,6 +23,7 @@ let selectedTool,
   selectedTheme,
   micImgElement = document.querySelector(".micImgReal");
 // console.log(micImgElement);
+
 localStorage.getItem("theme")
   ? (selectedTheme = localStorage.getItem("theme"))
   : localStorage.setItem("theme", "yellowMode");
@@ -77,13 +78,19 @@ if (selectedTheme == "yellowMode") {
 extpay
   .getUser()
   .then((user) => {
-    if (user.paid) {
+    const now = new Date();
+    const sevenDays = 1000 * 60 * 60 * 24 * 7; // seven days in milliseconds
+    if (
+      user.paid ||
+      (user.trialStartedAt && now - user.trialStartedAt < sevenDays)
+    ) {
       selectedTool = "brush";
     } else {
       selectedTool = "eraser";
     }
   })
   .catch((err) => {});
+// Checking if th user's trial still works
 const mouse = {
   x: undefined,
   y: undefined,
@@ -437,7 +444,8 @@ const popupBox = document.querySelector(".popup-box"),
   closeErrorPopupBtn = document.querySelector(".errorContent header img");
 const closePopupBtn = document.querySelector(".Upgradecontent header img"),
   payBtn = document.querySelector(".pay"),
-  options = document.querySelectorAll("footer li");
+  trialBtn = document.querySelector(".trial");
+options = document.querySelectorAll("footer li");
 closePopupBtn.addEventListener("click", () => {
   popupBox.classList.remove("see");
 });
@@ -457,7 +465,12 @@ closeErrorPopupBtn.addEventListener("click", () => {
 extpay
   .getUser()
   .then((user) => {
-    if (user.paid) {
+    const now = new Date();
+    const sevenDays = 1000 * 60 * 60 * 24 * 7; // seven days in milliseconds
+    if (
+      user.paid ||
+      (user.trialStartedAt && now - user.trialStartedAt < sevenDays)
+    ) {
       saveAsFileBtn.addEventListener("click", () => {
         const blob = new Blob([textAreaText.textContent], {
           type: fileExtensionsInputBox.value,
@@ -513,6 +526,10 @@ payBtn.addEventListener("click", () => {
   } else {
     errorBox.classList.add("see");
   }
+});
+
+trialBtn.addEventListener("click", () => {
+  extpay.openTrialPage();
 });
 // window.addEventListener("online", () => {
 //   payBtn.addEventListener("click", extpay.openPaymentPage);

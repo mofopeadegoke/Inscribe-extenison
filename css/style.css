@@ -8,7 +8,7 @@
 body {
     min-width: 50rem;
 }
-a {
+a, button {
     cursor: pointer;
 }
 main {
@@ -402,15 +402,17 @@ canvas {
     background-color: white;
     border-radius: 5px;
 }
-.popup-box .Upgradecontent p, .error-box .errorContent p  {
+.popup-box .Upgradecontent p:not(.paymentTxt), .error-box .errorContent p  {
     padding: 15px 25px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 0.9rem;
 }
 .popup-box .Upgradecontent button {
     width: calc(100% - 20px);
-    margin: 15px 10px;
+    margin: 7px 10px;
+    padding-block: 0.8rem;
 }
+
 .popup-box .Upgradecontent header, .error-box .errorContent header {
     padding: 6px 14px;
     border-bottom: 1px solid #222;
