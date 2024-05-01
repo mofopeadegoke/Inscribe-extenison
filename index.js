@@ -597,9 +597,12 @@ textAreaText.addEventListener("input", () => {
 textAreaText.addEventListener("change", (e) => {
   var liveSavingNote;
   liveSavingNote = textAreaText.textContent;
+  const lines = liveSavingNote.split("\n");
+  let storedTextArray = [];
+  storedTextArray = [...storedTextArray, ...lines];
+  var arrayStr = JSON.stringify(storedTextArray);
   localStorage.setItem("liveNote", liveSavingNote);
 });
-
 // More formatting Options
 let moreFormatting = document.querySelector(".more"),
   moreContainer = document.querySelector(".moreContainer");

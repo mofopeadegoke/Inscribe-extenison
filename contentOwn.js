@@ -133,14 +133,17 @@ let active = false;
 let currentX, currentY, initialX, initialY;
 noteRow.addEventListener("mousedown", dragStart);
 noteRow.addEventListener("mouseup", dragEnd);
-noteRow.addEventListener("mouseout", dragEnd);
-noteRow.addEventListener("mousemove", throttle(drag, 10));
+// noteRow.addEventListener("mouseout", dragEnd);
+noteRow.addEventListener("mousemove", drag);
 
 function dragStart(e) {
   e.preventDefault();
-  initialX = e.clientX - noteRow.getBoundingClientRect().left;
-  initialY = e.clientY - noteRow.getBoundingClientRect().top;
+  let rect = noteContainer.getBoundingClientRect();
+  initialX = e.clientX - rect.left;
+  initialY = e.clientY - rect.top;
   active = true;
+  console.log(rect.height);
+  console.log(rect.width);
 }
 
 function dragEnd() {
@@ -151,41 +154,33 @@ function drag(e) {
   if (!active) {
     return;
   }
-  if (
-    noteRow.getBoundingClientRect().left < 10 ||
-    noteRow.getBoundingClientRect().top < 10
-  ) {
-    dragEnd();
-    currentX = e.clientX - initialX;
-    currentY = e.clientY - initialY;
-    noteContainer.style.left = currentX + 10 + "px";
-    noteContainer.style.top = currentY + 10 + "px";
-    return;
-  }
+
+  // if (
+  //   noteContainer.getBoundingClientRect().left < 10 ||
+  //   noteContainer.getBoundingClientRect().top < 10
+  // ) {
+  //   dragEnd();
+  //   currentX = e.clientX - initialX;
+  //   currentY = e.clientY - initialY;
+  //   noteContainer.style.left = currentX + 10 + "px";
+  //   noteContainer.style.top = currentY + 10 + "px";
+  //   return;
+  // }
+
   e.preventDefault();
   currentX = e.clientX - initialX;
   currentY = e.clientY - initialY;
-  requestAnimationFrame(updatePosition);
-
-  // noteContainer.style.left = currentX + "px";
-  // noteContainer.style.top = currentY + "px";
-}
-
-function updatePosition() {
   noteContainer.style.left = currentX + "px";
   noteContainer.style.top = currentY + "px";
+  // updatePosition();
 }
 
-function throttle(func, limit) {
-  let lastCall = 0;
-  return function (...args) {
-    const now = new Date().getTime();
-    if (now - lastCall >= limit) {
-      lastCall = now;
-      func(...args);
-    }
-  };
-}
+// function updatePosition() {}
+
+// Assuming you have event listeners set up elsewhere
+noteRow.addEventListener("mousedown", dragStart);
+document.addEventListener("mouseup", dragEnd);
+document.addEventListener("mousemove", drag);
 
 document.body.append(noteContainer);
 
