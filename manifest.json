@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "version": "2.2162",
+    "version": "2.2163",
     "name": "Inscribe",
     "description": "The Inscribe extension enables users to make notes",
     "action": {
