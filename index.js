@@ -82,7 +82,7 @@ extpay
     const sevenDays = 1000 * 60 * 60 * 24 * 7; // seven days in milliseconds
     if (
       user.paid ||
-      (user.trialStartedAt && now - user.trialStartedAt < sevenDays)
+      (user.trialStartedAt && now - user.trialStartedAt < sevenDays) // Checking if the user's trial still works
     ) {
       selectedTool = "brush";
     } else {
@@ -90,7 +90,7 @@ extpay
     }
   })
   .catch((err) => {});
-// Checking if th user's trial still works
+
 const mouse = {
   x: undefined,
   y: undefined,
@@ -148,11 +148,20 @@ function drawLine(event) {
   ctx.lineTo(event.offsetX, event.offsetY);
   ctx.stroke();
 }
+let pathsry = [];
+let points = [];
+let redoArr = [];
+var previous = { x: 0, y: 0 };
+var iouse = { x: 0, y: 0 };
 
 function startDrawing(event) {
   isDrawing = true;
   mouse.x = event.offsetX;
   mouse.y = event.offsetY;
+  previous = { x: iouse.x, y: iouse.y };
+  iouse = oMousePos(canvas, event);
+  points = [];
+  points.push({ x: iouse.x, y: iouse.y });
   ctx.lineWidth = brushWidth;
   ctx.strokeStyle = selectedColor;
   ctx.fillStyle = selectedColor;
@@ -161,8 +170,22 @@ function startDrawing(event) {
   // console.log(event);
 }
 
+// a function to detect the mouse position
+function oMousePos(canvas, evt) {
+  var ClientRect = canvas.getBoundingClientRect();
+  return {
+    //objeto
+    x: Math.round(evt.clientX - ClientRect.left),
+    y: Math.round(evt.clientY - ClientRect.top),
+  };
+}
+
 canvas.addEventListener("mousemove", (event) => {
   if (!isDrawing) return;
+
+  previous = { x: iouse.x, y: iouse.y };
+  iouse = oMousePos(canvas, event);
+  points.push({ x: iouse.x, y: iouse.y });
   ctx.putImageData(snapshot, 0, 0);
   if (selectedTool === "brush" || selectedTool === "eraser") {
     ctx.strokeStyle = selectedTool === "eraser" ? "#FFF" : selectedColor;
@@ -184,7 +207,46 @@ canvas.addEventListener("mouseup", endDrawing);
 
 function endDrawing() {
   isDrawing = false;
+  pathsry.push(points);
 }
+
+function drawPaths() {
+  // delete everything
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // draw all the paths in the paths array
+  pathsry.forEach((path) => {
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    for (let i = 1; i < path.length; i++) {
+      ctx.lineTo(path[i].x, path[i].y);
+    }
+    ctx.stroke();
+  });
+}
+let allowRedo = false;
+
+function Undo() {
+  // remove the last path from the paths array
+  redoArr = pathsry.splice(-1, 1);
+  allowRedo = true;
+  // draw all the paths in the paths array
+  drawPaths();
+}
+
+function Redo() {
+  if (allowRedo) {
+    pathsry.push(redoArr[0]);
+    drawPaths();
+    redoArr = [];
+    allowRedo = false;
+  }
+}
+
+let undoBtn = document.querySelector(".undo-btn");
+undoBtn.addEventListener("click", Undo);
+let redoBtn = document.querySelector(".redo-btn");
+redoBtn.addEventListener("click", Redo);
+
 toolsBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelector(".active").classList.remove("active");
