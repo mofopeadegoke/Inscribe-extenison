@@ -151,30 +151,28 @@ function drawLine(event) {
 let pathsry = [];
 let points = [];
 let redoArr = [];
-var previous = { x: 0, y: 0 };
-var iouse = { x: 0, y: 0 };
+let previous = { x: 0, y: 0 };
+let iouse = { x: 0, y: 0 };
+
+// Assuming ctx, canvas, toolsBtn, sizeSlider, colorBtns, colorPicker, and clearCanvas are already defined
 
 function startDrawing(event) {
   isDrawing = true;
   mouse.x = event.offsetX;
   mouse.y = event.offsetY;
-  previous = { x: iouse.x, y: iouse.y };
+  previous = { x: mouse.x, y: mouse.y };
   iouse = oMousePos(canvas, event);
-  points = [];
-  points.push({ x: iouse.x, y: iouse.y });
+  points = [{ x: iouse.x, y: iouse.y }];
   ctx.lineWidth = brushWidth;
   ctx.strokeStyle = selectedColor;
   ctx.fillStyle = selectedColor;
   ctx.beginPath();
   snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  // console.log(event);
 }
 
-// a function to detect the mouse position
 function oMousePos(canvas, evt) {
   var ClientRect = canvas.getBoundingClientRect();
   return {
-    //objeto
     x: Math.round(evt.clientX - ClientRect.left),
     y: Math.round(evt.clientY - ClientRect.top),
   };
@@ -187,10 +185,11 @@ canvas.addEventListener("mousemove", (event) => {
   iouse = oMousePos(canvas, event);
   points.push({ x: iouse.x, y: iouse.y });
   ctx.putImageData(snapshot, 0, 0);
+
   if (selectedTool === "brush" || selectedTool === "eraser") {
     ctx.strokeStyle = selectedTool === "eraser" ? "#FFF" : selectedColor;
     ctx.lineWidth = brushWidth;
-    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.lineTo(iouse.x, iouse.y);
     ctx.stroke();
   } else if (selectedTool === "rectangle") {
     drawRect(event);
@@ -202,19 +201,22 @@ canvas.addEventListener("mousemove", (event) => {
     drawLine(event);
   }
 });
+
 canvas.addEventListener("mousedown", startDrawing);
 canvas.addEventListener("mouseup", endDrawing);
 
 function endDrawing() {
+  if (!isDrawing) return;
   isDrawing = false;
-  pathsry.push(points);
+  pathsry.push([...points]);
+  redoArr = [];
+  allowRedo = false;
 }
 
 function drawPaths() {
-  // delete everything
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // draw all the paths in the paths array
   pathsry.forEach((path) => {
+    if (path.length < 1) return;
     ctx.beginPath();
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) {
@@ -223,22 +225,24 @@ function drawPaths() {
     ctx.stroke();
   });
 }
+
 let allowRedo = false;
 
 function Undo() {
-  // remove the last path from the paths array
-  redoArr = pathsry.splice(-1, 1);
-  allowRedo = true;
-  // draw all the paths in the paths array
-  drawPaths();
+  if (pathsry.length > 0) {
+    redoArr.push(pathsry.pop());
+    allowRedo = true;
+    drawPaths();
+  }
 }
 
 function Redo() {
-  if (allowRedo) {
-    pathsry.push(redoArr[0]);
+  if (allowRedo && redoArr.length > 0) {
+    pathsry.push(redoArr.pop());
     drawPaths();
-    redoArr = [];
-    allowRedo = false;
+    if (redoArr.length === 0) {
+      allowRedo = false;
+    }
   }
 }
 
@@ -252,7 +256,6 @@ toolsBtn.forEach((btn) => {
     document.querySelector(".active").classList.remove("active");
     btn.classList.add("active");
     selectedTool = btn.id;
-    // console.log(selectedTool);
   });
 });
 
@@ -277,6 +280,8 @@ colorPicker.addEventListener("change", () => {
 
 clearCanvas.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  pathsry = [];
+  redoArr = [];
   setBackgroundColor();
 });
 
