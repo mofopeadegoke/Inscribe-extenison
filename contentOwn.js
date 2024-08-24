@@ -428,7 +428,7 @@ noteContent.addEventListener("change", (e) => {
   let storedTextArray = [];
   storedTextArray = [...storedTextArray, ...lines];
   var arrayStr = JSON.stringify(storedTextArray);
-  console.log(arrayStr);
+  // console.log(arrayStr);
   localStorage.setItem("liveNote", arrayStr);
 });
 value = localStorage.getItem("liveNote");
@@ -528,3 +528,84 @@ microphoneEl.addEventListener("click", () => {
   speech = false;
 });
 // End of FAB Code
+
+noteContent.addEventListener("change", (e) => {
+  getTimePhrasesFromNote();
+});
+// console.log(getTimePhrasesFromNote());
+
+function getTimePhrasesFromNote() {
+  const noteText = noteContent.innerText;
+  const timePhrases = noteText.match(/(\d{1,2}(:\d{2})?\s?[ap]m)/gi);
+  const fTimePhrases = formatTimeStrings(timePhrases);
+  return fTimePhrases;
+}
+
+function printAlertsWhenTimeIsReachedOrPassed() {
+  const timePhrases = getTimePhrasesFromNote();
+  if (!timePhrases) {
+    return;
+  }
+
+  const currentTime = new Date();
+  const currentTimeString = currentTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  timePhrases.forEach((timePhrase) => {
+    if (timePhrase == currentTimeString) {
+      alert("Time is up!");
+    }
+  });
+}
+
+function checkTimePhrase() {
+  setInterval(printAlertsWhenTimeIsReachedOrPassed, 10000);
+}
+
+function highlightTimePhrases() {
+  const timePhrases = getTimePhrasesFromNote();
+  if (!timePhrases) {
+    return;
+  }
+
+  const noteText = noteContent.innerText;
+  const lines = noteText.split("\n");
+  // console.log(lines);
+  const highlightedLines = lines.map((line) =>
+    line.replace(
+      /(\d{1,2}(:\d{2})?\s?[ap]m)/gi,
+      "<span style='background-color: yellow'>$1</span>"
+    )
+  );
+
+  noteContent.innerHTML = highlightedLines.join("<br>");
+}
+checkTimePhrase();
+highlightTimePhrases();
+// // // Setting alarm on the sticky note
+
+function formatTimeString(timeString) {
+  const match = timeString.match(/(\d{1,2})(:\d{2})?\s?([ap]m)/i);
+  if (!match) return timeString;
+
+  let [_, hour, minutes, period] = match;
+  hour = parseInt(hour, 10);
+  minutes = minutes ? minutes : ":00";
+  period = period.toUpperCase();
+
+  if (hour < 10) {
+    hour = `0${hour}`;
+  }
+
+  return `${hour}${minutes} ${period}`;
+}
+
+function formatTimeStrings(timeStrings) {
+  return timeStrings.map(formatTimeString);
+}
+
+// Example usage:
+const times = ["7pm", "8AM", "10:30 pm", "5:45am"];
+const formattedTimes = formatTimeStrings(times);
+console.log(formattedTimes); // ["07:00 PM", "08:00 AM", "10:30 PM", "05:45 AM"]
