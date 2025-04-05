@@ -446,7 +446,8 @@ saveNotesBtn.addEventListener("click", () => {
     let month = months[dateObj.getMonth()],
       day = dateObj.getDate(),
       year = dateObj.getFullYear();
-    let textModified = textAreaText.innerHTML;
+    let textModified = textAreaText.textContent;
+    console.log(textModified);
     textModified = textModified.replace(/  /g, "\t");
     textModified = textModified.replace(/\n/g, "<br>\n");
     console.log(textAreaText.innerHTML);
