@@ -351,3 +351,5 @@ payBtn.addEventListener("click", () => {
     errorBox.classList.add("see");
   }
 });
+
+// Inscribe being worked on
